@@ -3,9 +3,10 @@ import axios from 'axios';
 import './users.scss';
 
 interface User {
+  id: number;
   username: string;
   userType: string;
-  userNumber: number;
+  userToken: number;
   userPIN: number;
 }
 
@@ -22,10 +23,11 @@ const Users = () => {
     <div className="users">
       {listOfUsers.map((user) => {
         return (
-          <ul>
+          <ul key={user.id}>
+            <li>Numer ID: {user.id}</li>
             <li>Imię i nazwisko: {user.username}</li>
             <li>Typ użytkownika: {user.userType}</li>
-            <li>Numer telefonu: {user.userNumber}</li>
+            <li>Numer telefonu: {user.userToken}</li>
             <li>PIN: {user.userPIN}</li>
           </ul>
         );

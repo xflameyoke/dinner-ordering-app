@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
-    const Users = sequelize.define("Users", {
+    const Menu = sequelize.define("Menu", {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
         }
     })
 
-    return Users;
+    return Menu;
 }

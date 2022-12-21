@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        userNumber: {
+        userToken: {
             type: DataTypes.FLOAT(9),
             allowNull: false,
         },
@@ -18,5 +18,11 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
+    Users.associate = (models) => {
+        Users.hasMany(models.Orders, {
+            onDelete: "cascade",
+        });
+    };
+
     return Users;
-}
+};
