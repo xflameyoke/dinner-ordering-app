@@ -7,7 +7,7 @@ import './addUser.scss';
 interface User {
   username: string;
   userType: string;
-  userNumber: number | string;
+  userToken: number | string;
   userPIN: number | string;
 }
 
@@ -15,8 +15,8 @@ const AddUser = () => {
   const initialValues: User = {
     username: '',
     userType: '',
-    userNumber: 0,
-    userPIN: 0,
+    userToken: '',
+    userPIN: '',
   };
 
   const onSubmit = (data: User) => {
@@ -28,7 +28,7 @@ const AddUser = () => {
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('Imię i nazwisko jest wymagane!'),
     userType: Yup.string().required('Typ użytkownika jest wymagany!'),
-    userNumber: Yup.number()
+    userToken: Yup.number()
       .min(9, 'Token musi być zawierać 9 cyfr!')
       .required('Token musi być zawierać 9 cyfr!'),
     userPIN: Yup.number()
@@ -48,7 +48,7 @@ const AddUser = () => {
             <label>Imię i nazwisko: </label>
             <ErrorMessage name="username" component="span" />
             <Field
-              autocomplete="off"
+              autoComplete="off"
               id="username"
               name="username"
               placeholder="Jan Kowalski"
@@ -69,19 +69,19 @@ const AddUser = () => {
               <option value="directorAssistant">Asystentka Dyrektora</option>
             </Field>
             <label>Numer token: </label>
-            <ErrorMessage name="userNumber" component="span" />
+            <ErrorMessage name="userToken" component="span" />
             <Field
-              autocomplete="off"
-              id="userNumber"
-              name="userNumber"
-              placeholder="123456789"
+              autoComplete="off"
+              id="userToken"
+              name="userToken"
+              placeholder="Numer token"
               className="addUser-form__input"
               maxLength={9}
             />
             <label>Kod PIN: </label>
             <ErrorMessage name="userPIN" component="span" />
             <Field
-              autocomplete="off"
+              autoComplete="off"
               id="userPIN"
               name="userPIN"
               placeholder="1234"

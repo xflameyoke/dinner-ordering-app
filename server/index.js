@@ -15,3 +15,7 @@ db.sequelize.sync().then(() => {
 
 const usersRouter = require('./routes/users');
 app.use("/users", usersRouter);
+const menuRouter = require('./routes/menu');
+app.use("/menu", menuRouter);
+const ordersRouter = require('./routes/orders');
+app.use("/orders", ordersRouter);
