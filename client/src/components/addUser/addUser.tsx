@@ -1,10 +1,11 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import axios from 'axios';
 import './addUser.scss';
 
-interface User {
+interface UserTypes {
   username: string;
   userType: string;
   userToken: number | string;
@@ -12,16 +13,17 @@ interface User {
 }
 
 const AddUser = () => {
-  const initialValues: User = {
+  const navigate = useNavigate();
+  const initialValues: UserTypes = {
     username: '',
     userType: '',
     userToken: '',
     userPIN: '',
   };
 
-  const onSubmit = (data: User) => {
+  const onSubmit = (data: UserTypes) => {
     axios.post('http://localhost:3001/users', data).then((response) => {
-      console.log('It Worked');
+      navigate('/users');
     });
   };
 

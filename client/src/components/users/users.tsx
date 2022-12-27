@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './users.scss';
 
-interface User {
+interface UserTypes {
   id: number;
   username: string;
   userType: string;
@@ -11,7 +12,8 @@ interface User {
 }
 
 const Users = () => {
-  const [listOfUsers, setListOfUsers] = useState<User[]>([]);
+  const [listOfUsers, setListOfUsers] = useState<UserTypes[]>([]);
+  let navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:3001/users').then((response) => {
@@ -23,7 +25,12 @@ const Users = () => {
     <div className="users">
       {listOfUsers.map((user) => {
         return (
-          <ul key={user.id}>
+          <ul
+            key={user.id}
+            onClick={() => {
+              navigate(`/user/${user.id}`);
+            }}
+          >
             <li>Numer ID: {user.id}</li>
             <li>Imię i nazwisko: {user.username}</li>
             <li>Typ użytkownika: {user.userType}</li>
