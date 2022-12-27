@@ -29,11 +29,11 @@ const AddUser = () => {
     username: Yup.string().required('Imię i nazwisko jest wymagane!'),
     userType: Yup.string().required('Typ użytkownika jest wymagany!'),
     userToken: Yup.number()
-      .min(9, 'Token musi być zawierać 9 cyfr!')
-      .required('Token musi być zawierać 9 cyfr!'),
+      .min(9, 'Numer token musi zawierać 9 cyfr!')
+      .required('Numer token musi zawierać 9 cyfr!'),
     userPIN: Yup.number()
-      .min(4, 'Podaj minimum 4 cyfrowy kod!')
-      .required('Podaj minimum 4 cyfrowy kod!'),
+      .min(4, 'Kod PIN musi zawierać 4 cyfry!')
+      .required('Kod PIN musi zawierać 4 cyfry!'),
   });
 
   return (
