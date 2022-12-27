@@ -7,10 +7,10 @@ router.get('/', async (req, res) => {
     res.json(listOfUsers);
 });
 
-router.get('/byId/:id', async (req, res) => {
-    const id = req.params.id;
-    const listOfUsers = await Users.findByPk(id);
-    res.json(listOfUsers);
+router.get('/byId/:userId', async (req, res) => {
+    const id = req.params.userId;
+    const user = await Users.findByPk(id);
+    res.json(user);
 });
 
 router.post("/", async (req, res) => {

@@ -17,6 +17,9 @@ const Nav = () => (
       <li>
         <Link to="/admin">Admin</Link>
       </li>
+      <li>
+        <Link to="/userManage">Dodaj użytkownika</Link>
+      </li>
     </ul>
   </div>
 );
