@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         userToken: {
-            type: DataTypes.FLOAT(9),
+            type: DataTypes.STRING,
             allowNull: false,
         },
         userPIN: {
-            type: DataTypes.FLOAT(4),
+            type: DataTypes.STRING,
             allowNull: false,
         },
     });
