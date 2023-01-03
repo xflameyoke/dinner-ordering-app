@@ -22,9 +22,19 @@ const AddUser = () => {
   };
 
   const onSubmit = (data: UserTypes) => {
-    axios.post('http://localhost:3001/users', data).then((response) => {
-      navigate('/users');
-    });
+    axios
+      .post('http://localhost:3001/users', data, {
+        headers: {
+          accessToken: sessionStorage.getItem('accessToken'),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          navigate('/users');
+        }
+      });
   };
 
   const validationSchema = Yup.object().shape({
