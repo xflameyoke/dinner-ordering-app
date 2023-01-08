@@ -1,0 +1,28 @@
+.addDish {
+  max-width: 1000px;
+  height: 600px;
+  border: 1px solid black;
+  margin: 0 auto 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.addDish-form {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+
+  &__input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    font-weight: 600;
+    padding: 0 10px;
+    margin-bottom: 10px;
+    width: 480px;
+    height: 48px;
+  }
+}

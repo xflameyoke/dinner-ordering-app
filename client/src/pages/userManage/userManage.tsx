@@ -1,5 +1,5 @@
 import React from 'react';
-import AddUser from '../../components/addUser/addUser';
+import AddUser from '../../components/userComponents/addUser/addUser';
 
 const UserManage = () => <AddUser />;
 
