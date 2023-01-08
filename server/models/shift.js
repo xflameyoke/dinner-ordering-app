@@ -1,14 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
-    const Menu = sequelize.define("Menu", {
+    const Shift = sequelize.define("Shift", {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        price: {
+        hours: {
             type: DataTypes.STRING,
             allowNull: false,
         }
     })
 
-    return Menu;
+    return Shift;
 }

@@ -20,6 +20,12 @@ const Nav = () => (
       <li>
         <Link to="/userManage">Dodaj użytkownika</Link>
       </li>
+      <li>
+        <Link to="/addOrder">Złóż zamówienie</Link>
+      </li>
+      <li>
+        <Link to="/orders">Zamówienia</Link>
+      </li>
     </ul>
   </div>
 );

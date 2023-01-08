@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         ammount: {
             type: DataTypes.FLOAT,
             allowNull: false,
+        },
+        shift: {
+            type: DataTypes.STRING,
+            allowNull: false,
         }
     })
 

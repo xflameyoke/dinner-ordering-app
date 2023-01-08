@@ -1,6 +1,5 @@
 import React from 'react';
-import AddUser from '../../components/addUser/addUser';
-import Users from '../../components/users/users';
+import Users from '../../components/userComponents/users/users';
 
 const UsersList = () => <Users />;
 
