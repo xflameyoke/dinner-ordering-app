@@ -1,6 +1,5 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import axios from 'axios';
 import './addUser.scss';
@@ -13,7 +12,6 @@ interface UserTypes {
 }
 
 const AddUser = () => {
-  const navigate = useNavigate();
   const initialValues: UserTypes = {
     username: '',
     userType: '',
@@ -32,7 +30,7 @@ const AddUser = () => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          navigate('/users');
+          window.location.reload();
         }
       });
   };

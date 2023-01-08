@@ -1,29 +1,23 @@
 import React from 'react';
 import './App.css';
-import Nav from './components/nav/nav';
+import { Nav } from './components';
 import { Route, Routes } from 'react-router-dom';
-import LogIn from './pages/logIn/logIn';
-import UsersList from './pages/usersList/usersList';
 import User from './components/userComponents/user/user';
-import UserManage from './pages/userManage/userManage';
-import Menu from './pages/menu/menu';
-import Orders from './pages/orders/orders';
 import Order from './components/orderComponents/order/order';
-import AddOrder from './components/orderComponents/addOrder/addOrder';
+import { ShiftPage, LogInPage, MenuPage, OrdersPage, UsersPage } from './pages';
 
 const App = () => {
   return (
     <>
       <Nav />
       <Routes>
-        <Route path="/" element={<LogIn />} />
-        <Route path="/users" element={<UsersList />} />
+        <Route path="/" element={<LogInPage />} />
         <Route path="/user/:userId" element={<User />} />
-        <Route path="/userManage" element={<UserManage />} />
-        <Route path="/menu" element={<Menu />} />
-        <Route path="/addOrder" element={<AddOrder />} />
-        <Route path="/orders" element={<Orders />} />
+        <Route path="/usersPage" element={<UsersPage />} />
+        <Route path="/menu" element={<MenuPage />} />
+        <Route path="/orders" element={<OrdersPage />} />
         <Route path="/order/:orderId" element={<Order />} />
+        <Route path="/admin" element={<ShiftPage />} />
       </Routes>
     </>
   );

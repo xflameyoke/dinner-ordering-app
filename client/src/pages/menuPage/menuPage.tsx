@@ -2,11 +2,11 @@ import React from 'react';
 import AddDish from '../../components/menuComponents/addDish/addDish';
 import MenuList from '../../components/menuComponents/menuList/menuList';
 
-const Menu = () => (
+const MenuPage = () => (
   <>
     <AddDish />
     <MenuList />
   </>
 );
 
-export default Menu;
+export default MenuPage;
