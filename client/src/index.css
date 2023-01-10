@@ -14,4 +14,6 @@ body {
 
 span {
   color: red;
+  margin: 5px;
+  font-weight: bold;
 }

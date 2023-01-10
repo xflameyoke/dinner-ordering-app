@@ -8,18 +8,22 @@ const Nav = () => (
       <li>
         <Link to="/">Logowanie</Link>
       </li>
-      <li>
-        <Link to="/menu">Menu</Link>
-      </li>
-      <li>
-        <Link to="/admin">Admin</Link>
-      </li>
-      <li>
-        <Link to="/usersPage">Użytkownicy</Link>
-      </li>
-      <li>
-        <Link to="/orders">Zamówienia</Link>
-      </li>
+      {sessionStorage.getItem('accessToken') && (
+        <>
+          <li>
+            <Link to="/menu">Menu</Link>
+          </li>
+          <li>
+            <Link to="/admin">Admin</Link>
+          </li>
+          <li>
+            <Link to="/usersPage">Użytkownicy</Link>
+          </li>
+          <li>
+            <Link to="/orders">Zamówienia</Link>
+          </li>
+        </>
+      )}
     </ul>
   </div>
 );
