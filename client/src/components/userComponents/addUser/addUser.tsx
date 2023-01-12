@@ -23,7 +23,7 @@ const AddUser = () => {
     axios
       .post('http://localhost:3001/users', data, {
         headers: {
-          accessToken: sessionStorage.getItem('accessToken'),
+          accessToken: localStorage.getItem('accessToken'),
         },
       })
       .then((response) => {

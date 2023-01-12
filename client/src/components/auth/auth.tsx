@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import './auth.scss';
+import { AuthContext } from '../../helpers/authContext';
 
 interface UserLogin {
   userToken: number;
@@ -10,6 +11,7 @@ interface UserLogin {
 }
 
 const Auth = () => {
+  const { setAuthState } = useContext(AuthContext);
   const initialValues: UserLogin = {
     userToken: 1,
     userPIN: 1,
@@ -37,7 +39,8 @@ const Auth = () => {
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        sessionStorage.setItem('accessToken', response.data);
+        localStorage.setItem('accessToken', response.data);
+        setAuthState(true);
         window.location.reload();
       }
     });

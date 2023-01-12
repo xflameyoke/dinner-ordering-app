@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Nav } from './components';
 import { Route, Routes } from 'react-router-dom';
 import User from './components/userComponents/user/user';
 import Order from './components/orderComponents/order/order';
 import { ShiftPage, LogInPage, MenuPage, OrdersPage, UsersPage } from './pages';
+import { AuthContext } from './helpers/authContext';
 
 const App = () => {
+  const [authState, setAuthState] = useState<boolean>(false);
   return (
-    <>
+    <AuthContext.Provider value={{ authState, setAuthState }}>
       <Nav />
       <Routes>
         <Route path="/" element={<LogInPage />} />
@@ -19,7 +21,7 @@ const App = () => {
         <Route path="/order/:orderId" element={<Order />} />
         <Route path="/admin" element={<ShiftPage />} />
       </Routes>
-    </>
+    </AuthContext.Provider>
   );
 };
 
