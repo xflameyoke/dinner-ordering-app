@@ -1,7 +1,9 @@
 .nav {
   width: 100vw;
+  height: 30px;
   display: flex;
   justify-content: center;
+  line-height: 30px;
 
   ul {
     list-style-type: none;
@@ -14,9 +16,44 @@
   a {
     text-decoration: none;
     color: black;
+    font-size: 16px;
 
     &:hover {
       text-decoration: underline;
+      animation-name: font;
+      animation-duration: 0.5s;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
     }
+  }
+
+  &__logout {
+    position: fixed;
+    right: 10px;
+  }
+
+  &__button {
+    border: none;
+    background-color: white;
+    font-weight: 600;
+    font-size: 16px;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+      animation-name: font;
+      animation-duration: 0.5s;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
+    }
+  }
+}
+
+@keyframes font {
+  from {
+    font-size: 16px;
+  }
+  to {
+    font-size: 18px;
   }
 }

@@ -9,7 +9,7 @@ interface DishTypes {
   price: number;
 }
 
-const AddDish = () => {
+const AddDish: React.FC = () => {
   const initialValues: DishTypes = {
     name: '',
     price: 0,

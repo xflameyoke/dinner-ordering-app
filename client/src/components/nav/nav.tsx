@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './nav.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AuthContext from '../../helpers/authContext';
 
 const Nav = () => {
-  const [authState, setAuthState] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const { authState, setAuthState } = useContext(AuthContext);
 
   useEffect(() => {
     axios
@@ -15,12 +17,24 @@ const Nav = () => {
       })
       .then((response) => {
         if (response.data.error) {
-          setAuthState(false);
+          setAuthState({ ...authState, status: false });
         } else {
-          setAuthState(true);
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            userType: response.data.userType,
+            status: true,
+          });
         }
       });
-  }, []);
+  }, [authState, setAuthState]);
+
+  const logout = () => {
+    localStorage.removeItem('accessToken');
+    navigate('/');
+    setAuthState({ username: '', id: 0, userType: '', status: false });
+    window.location.reload();
+  };
 
   return (
     <div className="nav">
@@ -28,7 +42,7 @@ const Nav = () => {
         <li>
           <Link to="/">Logowanie</Link>
         </li>
-        {authState ? (
+        {authState.status ? (
           <>
             <li>
               <Link to="/menu">Menu</Link>
@@ -41,6 +55,11 @@ const Nav = () => {
             </li>
             <li>
               <Link to="/orders">Zamówienia</Link>
+            </li>
+            <li className="nav__logout">
+              <button className="nav__button" onClick={logout}>
+                Wyloguj
+              </button>
             </li>
           </>
         ) : (
