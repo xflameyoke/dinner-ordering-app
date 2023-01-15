@@ -47,9 +47,13 @@ const Nav = () => {
             <li>
               <Link to="/menu">Menu</Link>
             </li>
-            <li>
-              <Link to="/admin">Admin</Link>
-            </li>
+            {authState.userType === 'admin' ? (
+              <li>
+                <Link to="/admin">Admin</Link>
+              </li>
+            ) : (
+              ''
+            )}
             <li>
               <Link to="/usersPage">Użytkownicy</Link>
             </li>
