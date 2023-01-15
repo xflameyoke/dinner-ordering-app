@@ -11,7 +11,7 @@ interface UserTypes {
   userPIN: number;
 }
 
-const Users = () => {
+const Users: React.FC = () => {
   const [listOfUsers, setListOfUsers] = useState<UserTypes[]>([]);
   let navigate = useNavigate();
 
@@ -21,17 +21,32 @@ const Users = () => {
     });
   }, []);
 
+  const deleteUser = (id: number) => {
+    axios
+      .delete(`http://localhost:3001/users/${id}`, {
+        headers: {
+          accessToken: localStorage.getItem('accessToken'),
+        },
+      })
+      .then(() => {
+        setListOfUsers(
+          listOfUsers.filter((val) => {
+            return val.id !== id;
+          })
+        );
+      });
+  };
+
   return (
     <div className="users">
       {listOfUsers.map((user) => {
         return (
-          <ul
-            key={user.id}
-            onClick={() => {
-              navigate(`/user/${user.id}`);
-            }}
-          >
-            <li>
+          <ul key={user.id}>
+            <li
+              onClick={() => {
+                navigate(`/user/${user.id}`);
+              }}
+            >
               <div className="users-list">
                 <p>
                   <p className="users-list__title">Numer ID: </p> {user.id}
@@ -50,6 +65,13 @@ const Users = () => {
                 </p>
               </div>
             </li>
+            <button
+              onClick={() => {
+                deleteUser(user.id);
+              }}
+            >
+              Usuń
+            </button>
           </ul>
         );
       })}

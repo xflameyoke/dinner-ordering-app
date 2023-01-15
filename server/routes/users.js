@@ -41,12 +41,23 @@ router.post('/login', async (req, res) => {
 
         const accessToken = sign(
             { username: user.username, id: user.id, userType: user.userType }, "logininformation");
-        res.json(accessToken);
+        res.json({token: accessToken, username: user.username, id: user.id, userType: user.userType});
     });
 });
 
 router.get('/auth', validateToken, (req, res) => {
     res.json(req.user)
-})
+});
+
+router.delete('/:userId', validateToken, async (req, res) => {
+    const userId = req.params.userId;
+    await Users.destroy({
+        where: {
+            id: userId,
+        },
+    });
+
+    res.json('Użytkownik usunięty');
+});
 
 module.exports = router;

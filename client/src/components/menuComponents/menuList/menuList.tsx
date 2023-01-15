@@ -7,7 +7,7 @@ interface MenuTypes {
   id: number;
 }
 
-const MenuList = () => {
+const MenuList: React.FC = () => {
   const [menuList, setMenuList] = useState<MenuTypes[]>([]);
 
   useEffect(() => {
