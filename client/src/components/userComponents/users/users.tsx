@@ -31,11 +31,25 @@ const Users = () => {
               navigate(`/user/${user.id}`);
             }}
           >
-            <li>Numer ID: {user.id}</li>
-            <li>Imię i nazwisko: {user.username}</li>
-            <li>Typ użytkownika: {user.userType}</li>
-            <li>Numer telefonu: {user.userToken}</li>
-            <li>PIN: {user.userPIN}</li>
+            <li>
+              <div className="users-list">
+                <p>
+                  <p className="users-list__title">Numer ID: </p> {user.id}
+                </p>
+                <p>
+                  <p className="users-list__title">Imię i nazwisko: </p>
+                  {user.username}
+                </p>
+                <p>
+                  <p className="users-list__title">Typ użytkownika: </p>
+                  {user.userType}
+                </p>
+                <p>
+                  <p className="users-list__title">Numer telefonu: </p>
+                  {user.userToken}
+                </p>
+              </div>
+            </li>
           </ul>
         );
       })}
