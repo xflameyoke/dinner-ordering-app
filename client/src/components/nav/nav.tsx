@@ -39,14 +39,15 @@ const Nav = () => {
   return (
     <div className="nav">
       <ul>
-        <li>
-          <Link to="/">Logowanie</Link>
-        </li>
+        {authState.status === false ? (
+          <li>
+            <Link to="/">Logowanie</Link>
+          </li>
+        ) : (
+          ''
+        )}
         {authState.status ? (
           <>
-            <li>
-              <Link to="/menu">Menu</Link>
-            </li>
             {authState.userType === 'admin' ? (
               <li>
                 <Link to="/admin">Admin</Link>
@@ -54,12 +55,35 @@ const Nav = () => {
             ) : (
               ''
             )}
-            <li>
-              <Link to="/usersPage">Użytkownicy</Link>
-            </li>
-            <li>
-              <Link to="/orders">Zamówienia</Link>
-            </li>
+            {authState.userType === 'user' ? (
+              <>
+                <li>
+                  <Link to="/menu">Menu</Link>
+                </li>
+                <li>
+                  <Link to="/addOrder">Złóż zamówienie</Link>
+                </li>
+                <li>
+                  <Link to="/changePIN">Zmień PIN</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to="/menu">Menu</Link>
+                </li>
+                <li>
+                  <Link to="/addOrder">Złóż zamówienie</Link>
+                </li>
+                <li>
+                  <Link to="/usersPage">Użytkownicy</Link>
+                </li>
+                <li>
+                  <Link to="/orders">Lista zamówień</Link>
+                </li>
+              </>
+            )}
+
             <li className="nav__logout">
               <button className="nav__button" onClick={logout}>
                 Wyloguj

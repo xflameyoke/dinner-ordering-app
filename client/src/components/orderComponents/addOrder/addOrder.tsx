@@ -1,27 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import './addOrder.scss';
-import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../../helpers/authContext';
 
-interface DishTypes {
+interface MenuList {
   name: string;
+}
+interface DishTypes {
+  username: string;
   dish: string;
   ammount: number;
   shift: string;
 }
 
 const AddOrder = () => {
-  const [menuList, setMenuList] = useState<DishTypes[]>([]);
+  const { authState } = useContext(AuthContext);
+  const [menuList, setMenuList] = useState<MenuList[]>([]);
   const initialValues: DishTypes = {
-    name: '',
+    username: authState.username,
     dish: '',
     ammount: 1,
     shift: '',
   };
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:3001/menu').then((response) => {
@@ -40,14 +42,14 @@ const AddOrder = () => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          navigate('/orders');
+          alert('Zamówienie złożone poprawnie!');
         }
       });
   };
 
   const validationSchema = Yup.object().shape({
     dinner: Yup.string().required('Nazwa dania jest wymagana!'),
-    ammount: Yup.number().max(1),
+    shift: Yup.string().required('Wybór zmiany jest wymagany!'),
   });
 
   return (
@@ -63,13 +65,14 @@ const AddOrder = () => {
             <ErrorMessage name="name" component="span" />
             <Field
               autoComplete="off"
-              id="username "
+              id="username"
               name="username"
               className="addOrder-form__input"
-              placeholder="Jan Kowalski"
+              value={authState.username}
+              disabled={true}
             />
             <label>Danie: </label>
-            <ErrorMessage name="dish" component="span" />
+            <ErrorMessage name="dinner" component="span" />
             <Field
               as="select"
               id="dinner"
@@ -87,10 +90,10 @@ const AddOrder = () => {
               autoComplete="off"
               id="ammount"
               name="ammount"
-              placeholder="1"
+              value={1}
               className="addOrder-form__input"
               type="number"
-              min={1}
+              disabled={true}
             />
             <label>Zmiana: </label>
             <ErrorMessage name="shift" component="span" />

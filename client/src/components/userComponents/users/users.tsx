@@ -42,11 +42,7 @@ const Users: React.FC = () => {
       {listOfUsers.map((user) => {
         return (
           <ul key={user.id}>
-            <li
-              onClick={() => {
-                navigate(`/user/${user.id}`);
-              }}
-            >
+            <li>
               <div className="users-list">
                 <p>
                   <p className="users-list__title">Numer ID: </p> {user.id}
@@ -60,18 +56,29 @@ const Users: React.FC = () => {
                   {user.userType}
                 </p>
                 <p>
-                  <p className="users-list__title">Numer telefonu: </p>
+                  <p className="users-list__title">Numer Token: </p>
                   {user.userToken}
                 </p>
               </div>
             </li>
-            <button
-              onClick={() => {
-                deleteUser(user.id);
-              }}
-            >
-              Usuń
-            </button>
+            <div className="users__buttons">
+              <button
+                onClick={() => {
+                  deleteUser(user.id);
+                }}
+                className="users__button"
+              >
+                Usuń
+              </button>
+              <button
+                onClick={() => {
+                  navigate(`/user/${user.id}`);
+                }}
+                className="users__button users__button--edit"
+              >
+                Edytuj
+              </button>
+            </div>
           </ul>
         );
       })}
