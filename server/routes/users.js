@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
 const { Users } = require('../models');
-const bcrypt = require("bcrypt");
 const { sign } = require('jsonwebtoken');
-const { validateToken } = require("../middlewares/authMiddleware");
+const { validateToken } = require('../middlewares/authMiddleware');
 
 router.get('/', async (req, res) => {
     const listOfUsers = await Users.findAll();
@@ -16,17 +16,15 @@ router.get('/byId/:userId', async (req, res) => {
     res.json(user);
 });
 
-router.post("/", validateToken, async (req, res) => {
+router.post('/', validateToken, async (req, res) => {
     const { username, userType, userToken, userPIN } = req.body;
-    bcrypt.hash(userPIN, 4).then((hash) => {
-        Users.create({
+       await Users.create({
             username: username,
             userType: userType,
             userToken: userToken,
-            userPIN: hash
+            userPIN: userPIN,
         });
-        res.json("SUCESS");
-    });
+    res.json('SUCESS');
 });
 
 router.post('/login', async (req, res) => {
@@ -34,13 +32,13 @@ router.post('/login', async (req, res) => {
 
     const user = await Users.findOne({ where: { userToken: userToken } });
 
-    if (!user) res.json({ error: "Użytkownik nie istnieje" });
+    if (!user) res.json({ error: 'Użytkownik nie istnieje' });
 
     bcrypt.compare(userPIN, user.userPIN).then((match) => {
-        if (!match) res.json({ error: "Błędny użytkownik lub PIN!" });
+        if (!match) res.json({ error: 'Błędny użytkownik lub PIN!' });
 
         const accessToken = sign(
-            { username: user.username, id: user.id, userType: user.userType }, "logininformation");
+            { username: user.username, id: user.id, userType: user.userType }, 'logininformation');
         res.json({token: accessToken, username: user.username, id: user.id, userType: user.userType});
     });
 });
@@ -48,6 +46,34 @@ router.post('/login', async (req, res) => {
 router.get('/auth', validateToken, (req, res) => {
     res.json(req.user)
 });
+
+router.put('/username', validateToken, async (req, res) => {
+    const { newUsername, id } = req.body;
+    await Users.update({ username: newUsername }, {
+        where: {
+            id: id
+        }
+    });
+    res.json(newUsername);
+});
+
+router.put('/userToken', validateToken, async (req, res) => {
+    const { newUserToken, id } = req.body;
+    await Users.update({ userToken: newUserToken }, {
+        where: {
+        id: id
+    }});
+    res.json(newUserToken);
+})
+
+router.put('/userPIN', validateToken, async (req, res) => {
+    const { newUserPIN, id } = req.body;
+    await Users.update({ userPIN: newUserPIN }, {
+        where: {
+        id: id
+    }});
+    res.json(newUserPIN);
+})
 
 router.delete('/:userId', validateToken, async (req, res) => {
     const userId = req.params.userId;
