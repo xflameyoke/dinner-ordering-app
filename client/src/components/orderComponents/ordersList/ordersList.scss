@@ -1,0 +1,26 @@
+.ordersList {
+  display: grid;
+  grid-template-columns: 400px 400px 400px 400px;
+  height: 100%;
+  width: fit-content;
+  margin: 50px auto 0 auto;
+
+  ul {
+    border: 1px solid gray;
+    height: 100px;
+    margin: 10px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      cursor: pointer;
+      background-color: lightgray;
+    }
+  }
+
+  li {
+    list-style-type: none;
+  }
+}

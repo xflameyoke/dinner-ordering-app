@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './ordersList.scss';
 
 interface OrderTypes {
   id: number;
@@ -21,7 +22,7 @@ const OrdersList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="ordersList">
       {listOfOrders.map((order) => {
         return (
           <ul

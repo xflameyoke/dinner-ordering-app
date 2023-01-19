@@ -1,27 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import './addOrder.scss';
-import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../../helpers/authContext';
 
-interface DishTypes {
+interface MenuList {
   name: string;
+}
+interface DishTypes {
+  username: string;
   dish: string;
   ammount: number;
   shift: string;
 }
 
-const AddOrder = () => {
-  const [menuList, setMenuList] = useState<DishTypes[]>([]);
+interface ShiftTypes {
+  name: string;
+  hours: string;
+}
+
+const AddOrder = (): JSX.Element => {
+  const { authState } = useContext(AuthContext);
+  const [menuList, setMenuList] = useState<MenuList[]>([]);
+  const [shiftList, setShiftList] = useState<ShiftTypes[]>([]);
   const initialValues: DishTypes = {
-    name: '',
+    username: authState.username,
     dish: '',
     ammount: 1,
     shift: '',
   };
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:3001/menu').then((response) => {
@@ -29,25 +37,31 @@ const AddOrder = () => {
     });
   }, []);
 
+  useEffect(() => {
+    axios.get('http://localhost:3001/shift').then((response) => {
+      setShiftList(response.data);
+    });
+  }, []);
+
   const onSubmit = (data: DishTypes) => {
     axios
       .post('http://localhost:3001/orders', data, {
         headers: {
-          accessToken: sessionStorage.getItem('accessToken'),
+          accessToken: localStorage.getItem('accessToken'),
         },
       })
       .then((response) => {
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          navigate('/orders');
+          alert('Zamówienie złożone poprawnie!');
         }
       });
   };
 
   const validationSchema = Yup.object().shape({
-    dinner: Yup.string().required('Nazwa dania jest wymagana!'),
-    ammount: Yup.number().max(1),
+    dinner: Yup.string(),
+    shift: Yup.string(),
   });
 
   return (
@@ -63,18 +77,18 @@ const AddOrder = () => {
             <ErrorMessage name="name" component="span" />
             <Field
               autoComplete="off"
-              id="username "
+              id="username"
               name="username"
               className="addOrder-form__input"
-              placeholder="Jan Kowalski"
+              value={authState.username}
+              disabled={true}
             />
             <label>Danie: </label>
-            <ErrorMessage name="dish" component="span" />
+            <ErrorMessage name="dinner" component="span" />
             <Field
               as="select"
               id="dinner"
               name="dinner"
-              placeholder="Rosół"
               className="addOrder-form__input"
             >
               {menuList.map((menu) => (
@@ -87,19 +101,23 @@ const AddOrder = () => {
               autoComplete="off"
               id="ammount"
               name="ammount"
-              placeholder="1"
+              value={1}
               className="addOrder-form__input"
               type="number"
-              min={1}
+              disabled={true}
             />
             <label>Zmiana: </label>
             <ErrorMessage name="shift" component="span" />
             <Field
-              autoComplete="off"
+              as="select"
               id="shift"
               name="shift"
               className="addOrder-form__input"
-            />
+            >
+              {shiftList.map((shift) => (
+                <option value={`${shift.name}`}>{shift.name}</option>
+              ))}
+            </Field>
             <button type="submit">Złóż zamówienie</button>
           </Form>
         </Formik>

@@ -1,27 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import { Nav } from './components';
 import { Route, Routes } from 'react-router-dom';
 import User from './components/userComponents/user/user';
 import Order from './components/orderComponents/order/order';
+import AddOrder from './components/orderComponents/addOrder/addOrder';
+import Menu from './components/menuComponents/menu/menu';
 import { ShiftPage, LogInPage, MenuPage, OrdersPage, UsersPage } from './pages';
-import { AuthContext } from './helpers/authContext';
+import { AuthContextProvider } from './helpers/authContext';
 
 const App = () => {
-  const [authState, setAuthState] = useState<boolean>(false);
   return (
-    <AuthContext.Provider value={{ authState, setAuthState }}>
+    <AuthContextProvider>
       <Nav />
       <Routes>
         <Route path="/" element={<LogInPage />} />
         <Route path="/user/:userId" element={<User />} />
         <Route path="/usersPage" element={<UsersPage />} />
         <Route path="/menu" element={<MenuPage />} />
+        <Route path="/menu/:menuId" element={<Menu />} />
         <Route path="/orders" element={<OrdersPage />} />
+        <Route path="/addOrder" element={<AddOrder />} />
         <Route path="/order/:orderId" element={<Order />} />
         <Route path="/admin" element={<ShiftPage />} />
       </Routes>
-    </AuthContext.Provider>
+    </AuthContextProvider>
   );
 };
 

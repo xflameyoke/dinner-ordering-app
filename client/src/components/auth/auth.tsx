@@ -3,15 +3,16 @@ import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import './auth.scss';
-import { AuthContext } from '../../helpers/authContext';
+import AuthContext from '../../helpers/authContext';
 
 interface UserLogin {
   userToken: number;
   userPIN: number;
 }
 
-const Auth = () => {
+const Auth: React.FC = () => {
   const { setAuthState } = useContext(AuthContext);
+
   const initialValues: UserLogin = {
     userToken: 1,
     userPIN: 1,
@@ -39,8 +40,13 @@ const Auth = () => {
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        localStorage.setItem('accessToken', response.data);
-        setAuthState(true);
+        localStorage.setItem('accessToken', response.data.token);
+        setAuthState({
+          username: response.data.username,
+          id: response.data.id,
+          userType: response.data.userType,
+          status: true,
+        });
         window.location.reload();
       }
     });
@@ -55,7 +61,7 @@ const Auth = () => {
           validationSchema={validationSchema}
         >
           <Form>
-            <label>Numer użytkownika</label>
+            <label>Nazwa użytkownika</label>
             <ErrorMessage name="userToken" component="span" />
             <Field
               autoComplete="off"

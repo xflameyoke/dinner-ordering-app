@@ -1,4 +1,4 @@
-.users {
+.menuList {
   display: grid;
   grid-template-columns: 400px 400px 400px 400px;
   width: 1600px;
@@ -48,14 +48,7 @@
   }
 }
 
-.users__button--edit {
-  &:hover {
-    color: green;
-    border: 2px solid green;
-  }
-}
-
-.users-list {
+.menuList--list {
   display: flex;
   flex-direction: column;
 
@@ -67,5 +60,12 @@
   &__title {
     display: inline;
     font-weight: bold;
+  }
+}
+
+.menuList__button--edit {
+  &:hover {
+    color: green;
+    border: 2px solid green;
   }
 }
