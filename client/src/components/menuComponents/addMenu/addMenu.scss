@@ -23,5 +23,20 @@
     margin-bottom: 10px;
     width: 480px;
     height: 48px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+
+  &__button {
+    width: 480px;
+    height: 30px;
+    border: 1px solid black;
+    background: white;
+    border-radius: 5px;
+    font-weight: bold;
+
+    &:hover {
+      border: 2px solid black;
+    }
   }
 }

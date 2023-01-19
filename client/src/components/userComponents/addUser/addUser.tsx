@@ -106,7 +106,9 @@ const AddUser = () => {
               className="addUser-form__input"
               maxLength={4}
             />
-            <button type="submit">Dodaj użytkownika</button>
+            <button type="submit" className="addUser-form__button">
+              Dodaj użytkownika
+            </button>
           </Form>
         </Formik>
       </div>

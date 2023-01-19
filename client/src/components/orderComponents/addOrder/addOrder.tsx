@@ -118,7 +118,9 @@ const AddOrder = (): JSX.Element => {
                 <option value={`${shift.name}`}>{shift.name}</option>
               ))}
             </Field>
-            <button type="submit">Złóż zamówienie</button>
+            <button type="submit" className="addOrder-form__button">
+              Złóż zamówienie
+            </button>
           </Form>
         </Formik>
       </div>

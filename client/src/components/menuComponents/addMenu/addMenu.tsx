@@ -67,7 +67,9 @@ const AddMenu = (): JSX.Element => {
               min={1}
               className="addDish-form__input"
             />
-            <button type="submit">Dodaj danie</button>
+            <button type="submit" className="addDish-form__button">
+              Dodaj danie
+            </button>
           </Form>
         </Formik>
       </div>
