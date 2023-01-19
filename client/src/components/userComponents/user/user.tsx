@@ -10,7 +10,7 @@ interface UserTypes {
   userPIN: number | string;
 }
 
-const User = () => {
+const User = (): JSX.Element => {
   let { userId } = useParams();
   const [userData, setUserData] = useState<UserTypes>({
     id: 1,

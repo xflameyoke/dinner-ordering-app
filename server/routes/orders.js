@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Orders } = require('../models');
+const { validateToken } = require('../middlewares/authMiddleware');
 
 
 router.get('/', async (req, res) => {
@@ -14,7 +15,7 @@ router.get('/byId/:orderId', async (req, res) => {
     res.json(order);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', validateToken, async (req, res) => {
     const order = req.body;
     await Orders.create(order);
     res.json(order);

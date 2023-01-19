@@ -1,31 +1,54 @@
 .menuList {
   display: grid;
-  grid-template-columns: 350px 350px 350px 350px;
+  grid-template-columns: 400px 400px 400px 400px;
+  width: 1600px;
   height: 100%;
-  width: fit-content;
-  margin: 50px auto 0 auto;
+  margin: 0 auto 0 auto;
 
   ul {
-    border: 1px solid gray;
+    width: 380px;
     height: 100px;
-    margin: 10px;
-    padding: 0;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 0 5px 0 5px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    margin-top: 5px;
 
     &:hover {
-      background-color: lightgray;
       cursor: default;
+      border: 1px solid black;
+      box-shadow: 8px 8px 24px -9px rgba(66, 68, 90, 1);
     }
   }
 
   li {
     list-style-type: none;
   }
+
+  &__button {
+    border: 1px solid black;
+    background: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 60px;
+    margin-bottom: 5px;
+
+    &:hover {
+      color: red;
+      border: 2px solid red;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    margin: auto 0 auto 0;
+  }
 }
 
-.menuList-list {
+.menuList--list {
   display: flex;
   flex-direction: column;
 
@@ -37,5 +60,12 @@
   &__title {
     display: inline;
     font-weight: bold;
+  }
+}
+
+.menuList__button--edit {
+  &:hover {
+    color: green;
+    border: 2px solid green;
   }
 }

@@ -15,9 +15,15 @@ interface DishTypes {
   shift: string;
 }
 
-const AddOrder = () => {
+interface ShiftTypes {
+  name: string;
+  hours: string;
+}
+
+const AddOrder = (): JSX.Element => {
   const { authState } = useContext(AuthContext);
   const [menuList, setMenuList] = useState<MenuList[]>([]);
+  const [shiftList, setShiftList] = useState<ShiftTypes[]>([]);
   const initialValues: DishTypes = {
     username: authState.username,
     dish: '',
@@ -31,11 +37,17 @@ const AddOrder = () => {
     });
   }, []);
 
+  useEffect(() => {
+    axios.get('http://localhost:3001/shift').then((response) => {
+      setShiftList(response.data);
+    });
+  }, []);
+
   const onSubmit = (data: DishTypes) => {
     axios
       .post('http://localhost:3001/orders', data, {
         headers: {
-          accessToken: sessionStorage.getItem('accessToken'),
+          accessToken: localStorage.getItem('accessToken'),
         },
       })
       .then((response) => {
@@ -48,8 +60,8 @@ const AddOrder = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    dinner: Yup.string().required('Nazwa dania jest wymagana!'),
-    shift: Yup.string().required('Wybór zmiany jest wymagany!'),
+    dinner: Yup.string(),
+    shift: Yup.string(),
   });
 
   return (
@@ -77,7 +89,6 @@ const AddOrder = () => {
               as="select"
               id="dinner"
               name="dinner"
-              placeholder="Rosół"
               className="addOrder-form__input"
             >
               {menuList.map((menu) => (
@@ -98,11 +109,15 @@ const AddOrder = () => {
             <label>Zmiana: </label>
             <ErrorMessage name="shift" component="span" />
             <Field
-              autoComplete="off"
+              as="select"
               id="shift"
               name="shift"
               className="addOrder-form__input"
-            />
+            >
+              {shiftList.map((shift) => (
+                <option value={`${shift.name}`}>{shift.name}</option>
+              ))}
+            </Field>
             <button type="submit">Złóż zamówienie</button>
           </Form>
         </Formik>

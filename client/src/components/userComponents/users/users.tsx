@@ -11,7 +11,7 @@ interface UserTypes {
   userPIN: number;
 }
 
-const Users: React.FC = () => {
+const Users = (): JSX.Element => {
   const [listOfUsers, setListOfUsers] = useState<UserTypes[]>([]);
   let navigate = useNavigate();
 
@@ -44,21 +44,21 @@ const Users: React.FC = () => {
           <ul key={user.id}>
             <li>
               <div className="users-list">
-                <p>
+                <div>
                   <p className="users-list__title">Numer ID: </p> {user.id}
-                </p>
-                <p>
+                </div>
+                <div>
                   <p className="users-list__title">Imię i nazwisko: </p>
                   {user.username}
-                </p>
-                <p>
+                </div>
+                <div>
                   <p className="users-list__title">Typ użytkownika: </p>
                   {user.userType}
-                </p>
-                <p>
+                </div>
+                <div>
                   <p className="users-list__title">Numer Token: </p>
                   {user.userToken}
-                </p>
+                </div>
               </div>
             </li>
             <div className="users__buttons">

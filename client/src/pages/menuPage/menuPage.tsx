@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import AddDish from '../../components/menuComponents/addDish/addDish';
+import AddDish from '../../components/menuComponents/addMenu/addMenu';
 import MenuList from '../../components/menuComponents/menuList/menuList';
 import AuthContext from '../../helpers/authContext';
 

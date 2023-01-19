@@ -2,20 +2,20 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import './addDish.scss';
+import './addMenu.scss';
 
-interface DishTypes {
+interface MenuTypes {
   name: string;
   price: number;
 }
 
-const AddDish: React.FC = () => {
-  const initialValues: DishTypes = {
+const AddMenu = (): JSX.Element => {
+  const initialValues: MenuTypes = {
     name: '',
     price: 0,
   };
 
-  const onSubmit = (data: DishTypes) => {
+  const onSubmit = (data: MenuTypes) => {
     axios
       .post('http://localhost:3001/menu', data, {
         headers: {
@@ -75,4 +75,4 @@ const AddDish: React.FC = () => {
   );
 };
 
-export default AddDish;
+export default AddMenu;
