@@ -23,6 +23,7 @@ const Nav = () => {
             username: response.data.username,
             id: response.data.id,
             userType: response.data.userType,
+            userToken: response.data.userToken,
             status: true,
           });
         }
@@ -32,29 +33,25 @@ const Nav = () => {
   const logout = () => {
     localStorage.removeItem('accessToken');
     navigate('/');
-    setAuthState({ username: '', id: 0, userType: '', status: false });
+    setAuthState({
+      username: '',
+      id: 0,
+      userType: '',
+      userToken: '',
+      status: false,
+    });
     window.location.reload();
   };
 
   return (
-    <div className="nav">
+    <nav className="nav">
       <ul>
         {authState.status === false ? (
           <li>
             <Link to="/">Logowanie</Link>
           </li>
         ) : (
-          ''
-        )}
-        {authState.status ? (
           <>
-            {authState.userType === 'admin' ? (
-              <li>
-                <Link to="/admin">Admin</Link>
-              </li>
-            ) : (
-              ''
-            )}
             {authState.userType === 'user' ? (
               <>
                 <li>
@@ -70,10 +67,7 @@ const Nav = () => {
             ) : (
               <>
                 <li>
-                  <Link to="/menu">Menu</Link>
-                </li>
-                <li>
-                  <Link to="/addOrder">Złóż zamówienie</Link>
+                  <Link to="/shifts">Edytuj zmiany</Link>
                 </li>
                 <li>
                   <Link to="/usersPage">Użytkownicy</Link>
@@ -83,18 +77,17 @@ const Nav = () => {
                 </li>
               </>
             )}
-
-            <li className="nav__logout">
-              <button className="nav__button" onClick={logout}>
-                Wyloguj
-              </button>
-            </li>
           </>
-        ) : (
-          ''
         )}
+
+        <li className="nav__logout">
+          {authState.username}
+          <button className="nav__button" onClick={logout}>
+            Wyloguj
+          </button>
+        </li>
       </ul>
-    </div>
+    </nav>
   );
 };
 

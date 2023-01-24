@@ -16,14 +16,16 @@ router.get('/byId/:userId', async (req, res) => {
     res.json(user);
 });
 
-router.post('/', validateToken, async (req, res) => {
+router.post('/', async (req, res) => {
     const { username, userType, userToken, userPIN } = req.body;
-       await Users.create({
-            username: username,
-            userType: userType,
-            userToken: userToken,
-            userPIN: userPIN,
-        });
+    bcrypt.hash(userPIN, 4).then((hash) => {
+        Users.create({
+            username,
+            userType,
+            userToken,
+            userPIN: hash,
+           })
+       })
     res.json('SUCESS');
 });
 
@@ -38,8 +40,8 @@ router.post('/login', async (req, res) => {
         if (!match) res.json({ error: 'Błędny użytkownik lub PIN!' });
 
         const accessToken = sign(
-            { username: user.username, id: user.id, userType: user.userType }, 'logininformation');
-        res.json({token: accessToken, username: user.username, id: user.id, userType: user.userType});
+            { username: user.username, id: user.id, userType: user.userType, userToken: user.userToken }, 'logininformation');
+        res.json({ token: accessToken, username: user.username, id: user.id, userType: user.userType, userToken: user.userToken });
     });
 });
 
@@ -66,16 +68,7 @@ router.put('/userToken', validateToken, async (req, res) => {
     res.json(newUserToken);
 })
 
-router.put('/userPIN', validateToken, async (req, res) => {
-    const { newUserPIN, id } = req.body;
-    await Users.update({ userPIN: newUserPIN }, {
-        where: {
-        id: id
-    }});
-    res.json(newUserPIN);
-})
-
-router.delete('/:userId', validateToken, async (req, res) => {
+router.delete('/:userId', async (req, res) => {
     const userId = req.params.userId;
     await Users.destroy({
         where: {
@@ -84,6 +77,23 @@ router.delete('/:userId', validateToken, async (req, res) => {
     });
 
     res.json('Użytkownik usunięty');
+});
+
+router.put("/changePIN", validateToken, async (req, res) => {
+  const { oldPIN, newPIN } = req.body;
+  const user = await Users.findOne({ where: { userToken: req.user.userToken } });
+
+  bcrypt.compare(oldPIN, user.userPIN).then(async (match) => {
+    if (!match) res.json({ error: "Wprowadzono błędny kod PIN!" });
+
+    bcrypt.hash(newPIN, 4).then((hash) => {
+      Users.update(
+        { userPIN: hash },
+        { where: { userToken: req.user.userToken } }
+      );
+      res.json("SUCCESS");
+    });
+  });
 });
 
 module.exports = router;

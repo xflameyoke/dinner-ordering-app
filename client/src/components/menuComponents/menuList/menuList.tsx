@@ -39,7 +39,7 @@ const MenuList = (): JSX.Element => {
   };
 
   return (
-    <div className="menuList">
+    <article className="menuList">
       {loading ? (
         <LoadingSpinner />
       ) : (
@@ -82,7 +82,7 @@ const MenuList = (): JSX.Element => {
           })}
         </>
       )}
-    </div>
+    </article>
   );
 };
 

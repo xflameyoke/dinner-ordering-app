@@ -39,7 +39,7 @@ const AddMenu = (): JSX.Element => {
   });
 
   return (
-    <div className="addDish">
+    <article className="addDish">
       <div className="addDish-form">
         <Formik
           initialValues={initialValues}
@@ -73,7 +73,7 @@ const AddMenu = (): JSX.Element => {
           </Form>
         </Formik>
       </div>
-    </div>
+    </article>
   );
 };
 

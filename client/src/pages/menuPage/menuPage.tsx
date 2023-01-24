@@ -3,10 +3,10 @@ import AddDish from '../../components/menuComponents/addMenu/addMenu';
 import MenuList from '../../components/menuComponents/menuList/menuList';
 import AuthContext from '../../helpers/authContext';
 
-const MenuPage = () => {
+const MenuPage = (): JSX.Element => {
   const { authState } = useContext(AuthContext);
   return (
-    <>
+    <article>
       {authState.userType === 'user' ? (
         <MenuList />
       ) : (
@@ -15,7 +15,7 @@ const MenuPage = () => {
           <MenuList />
         </>
       )}
-    </>
+    </article>
   );
 };
 
