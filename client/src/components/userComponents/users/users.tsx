@@ -42,7 +42,7 @@ const Users = (): JSX.Element => {
   };
 
   return (
-    <div className="users">
+    <article className="users">
       {loading ? (
         <LoadingSpinner />
       ) : (
@@ -92,7 +92,7 @@ const Users = (): JSX.Element => {
           })}
         </>
       )}
-    </div>
+    </article>
   );
 };
 

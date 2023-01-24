@@ -48,7 +48,7 @@ const Menu = (): JSX.Element => {
   };
 
   return (
-    <>
+    <article>
       <div
         onClick={() => {
           editMenu('name');
@@ -63,7 +63,7 @@ const Menu = (): JSX.Element => {
       >
         {menuData.price}
       </div>
-    </>
+    </article>
   );
 };
 

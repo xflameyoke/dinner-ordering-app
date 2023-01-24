@@ -65,7 +65,7 @@ const AddOrder = (): JSX.Element => {
   });
 
   return (
-    <div className="addOrder">
+    <article className="addOrder">
       <div className="addOrder-form">
         <Formik
           initialValues={initialValues}
@@ -124,7 +124,7 @@ const AddOrder = (): JSX.Element => {
           </Form>
         </Formik>
       </div>
-    </div>
+    </article>
   );
 };
 

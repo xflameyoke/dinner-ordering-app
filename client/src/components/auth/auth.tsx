@@ -7,15 +7,15 @@ import AuthContext from '../../helpers/authContext';
 
 interface UserLogin {
   userToken: number;
-  userPIN: number;
+  userPIN: string;
 }
 
-const Auth: React.FC = () => {
+const Auth = (): JSX.Element => {
   const { setAuthState } = useContext(AuthContext);
 
   const initialValues: UserLogin = {
-    userToken: 1,
-    userPIN: 1,
+    userToken: 0,
+    userPIN: '',
   };
 
   const validationSchema = Yup.object().shape({
@@ -26,13 +26,9 @@ const Auth: React.FC = () => {
         'Numer użytkownika musi wynosić 9 cyfr!',
         (val) => val?.toString().length === 9
       ),
-    userPIN: Yup.number()
+    userPIN: Yup.string()
       .required('Kod PIN jest wymagany!')
-      .test(
-        'len',
-        'Kod PIN musi wynosić 4 cyfry!',
-        (val) => val?.toString().length === 4
-      ),
+      .test('len', 'Kod PIN musi wynosić 4 cyfry!', (val) => val?.length === 4),
   });
 
   const onSubmit = (data: UserLogin) => {
@@ -45,6 +41,7 @@ const Auth: React.FC = () => {
           username: response.data.username,
           id: response.data.id,
           userType: response.data.userType,
+          userToken: response.data.userToken,
           status: true,
         });
         window.location.reload();
@@ -53,7 +50,7 @@ const Auth: React.FC = () => {
   };
 
   return (
-    <div className="auth">
+    <article className="auth">
       <div className="auth-form">
         <Formik
           initialValues={initialValues}
@@ -83,7 +80,7 @@ const Auth: React.FC = () => {
           </Form>
         </Formik>
       </div>
-    </div>
+    </article>
   );
 };
 

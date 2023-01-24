@@ -25,7 +25,7 @@ const OrdersList = () => {
   }, []);
 
   return (
-    <div className="ordersList">
+    <article className="ordersList">
       {loading ? (
         <LoadingSpinner />
       ) : (
@@ -71,7 +71,7 @@ const OrdersList = () => {
           })}
         </>
       )}
-    </div>
+    </article>
   );
 };
 

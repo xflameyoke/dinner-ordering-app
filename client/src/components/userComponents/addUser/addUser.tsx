@@ -45,13 +45,9 @@ const AddUser = () => {
         'Token użytkownika musi wynosić 9 cyfr!',
         (val) => val?.toString().length === 9
       ),
-    userPIN: Yup.number()
-      .required('Kod PIN musi zawierać 4 cyfry!')
-      .test(
-        'len',
-        'Kod PIN musi zawirać 4 znaki!',
-        (val) => val?.toString().length === 4
-      ),
+    userPIN: Yup.string()
+      .required('Kod PIN musi zawierać 4 znaki!')
+      .test('len', 'Kod PIN musi zawirać 4 znaki!', (val) => val?.length === 4),
   });
 
   return (

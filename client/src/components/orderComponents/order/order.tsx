@@ -6,16 +6,16 @@ interface OrderTypes {
   id: number;
   username: string;
   dinner: string;
-  ammount: number | string;
+  ammount: number;
 }
 
-const Order = () => {
+const Order = (): JSX.Element => {
   let { orderId } = useParams();
   const [orderData, setOrderData] = useState<OrderTypes>({
     id: 1,
     username: '',
     dinner: '',
-    ammount: '',
+    ammount: 1,
   });
 
   useEffect(() => {
@@ -27,12 +27,14 @@ const Order = () => {
   }, [orderId]);
 
   return (
-    <ul>
-      <li>ID: {orderData.id}</li>
-      <li>Nazwa użytkownika: {orderData.username}</li>
-      <li>Obiad: {orderData.dinner}</li>
-      <li>Ilość: {orderData.ammount}</li>
-    </ul>
+    <article>
+      <ul>
+        <li>ID: {orderData.id}</li>
+        <li>Nazwa użytkownika: {orderData.username}</li>
+        <li>Obiad: {orderData.dinner}</li>
+        <li>Ilość: {orderData.ammount}</li>
+      </ul>
+    </article>
   );
 };
 

@@ -9,6 +9,7 @@ export interface AuthUser {
   username: string;
   id: number;
   userType: string;
+  userToken: string;
   status: boolean;
 }
 export type AuthContextType = {
@@ -21,16 +22,18 @@ export const AuthContext = createContext<AuthContextType>({
     username: '',
     id: 0,
     userType: '',
+    userToken: '',
     status: false,
   },
   setAuthState: (user: AuthUser) => {},
 });
 
-export const AuthContextProvider: React.FC<Props> = ({ children }) => {
+export const AuthContextProvider = ({ children }: Props) => {
   const [authState, setAuthState] = useState<AuthUser>({
     username: '',
     id: 0,
     userType: '',
+    userToken: '',
     status: false,
   });
 
@@ -49,6 +52,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
             username: response.data.username,
             id: response.data.id,
             userType: response.data.userType,
+            userToken: response.data.userToken,
             status: true,
           });
         }

@@ -49,46 +49,31 @@ const User = (): JSX.Element => {
         },
         { headers: { accessToken: localStorage.getItem('accessToken') } }
       );
-    } else if (option === 'userPIN') {
-      let newUserPIN = prompt('Wpis nowy kod PIN: ');
-      axios.put(
-        'http://localhost:3001/users/userPIN',
-        {
-          newUserPIN: newUserPIN,
-          id: userId,
-        },
-        { headers: { accessToken: localStorage.getItem('accessToken') } }
-      );
     }
     window.location.reload();
   };
 
   return (
-    <ul>
-      <li>ID: {userData.id}</li>
-      <li
-        onClick={() => {
-          editUser('username');
-        }}
-      >
-        Nazwa: {userData.username}
-      </li>
-      <li>Typ: {userData.userType}</li>
-      <li
-        onClick={() => {
-          editUser('userToken');
-        }}
-      >
-        Token: {userData.userToken}
-      </li>
-      <li
-        onClick={() => {
-          editUser('userPIN');
-        }}
-      >
-        PIN: {userData.userPIN}
-      </li>
-    </ul>
+    <article>
+      <ul>
+        <li>ID: {userData.id}</li>
+        <li
+          onClick={() => {
+            editUser('username');
+          }}
+        >
+          Nazwa: {userData.username}
+        </li>
+        <li>Typ: {userData.userType}</li>
+        <li
+          onClick={() => {
+            editUser('userToken');
+          }}
+        >
+          Token: {userData.userToken}
+        </li>
+      </ul>
+    </article>
   );
 };
 
