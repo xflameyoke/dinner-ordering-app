@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './ordersList.scss';
-import LoadingSpinner from '../../ui/loadingSpinner/loadingSpinner';
+import './OrdersList.scss';
+import { LoadingSpinner } from '../../UI/LoadingSpinner';
+import { url } from '../../../Helpers/Urls';
 
-interface OrderTypes {
+interface IOrder {
   id: number;
   username: string;
   dinner: string;
@@ -12,17 +13,21 @@ interface OrderTypes {
   shift: string;
 }
 
-const OrdersList = () => {
-  const [listOfOrders, setListOfOrders] = useState<OrderTypes[]>([]);
+const OrdersList = (): JSX.Element => {
+  const [listOfOrders, setListOfOrders] = useState<IOrder[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:3001/orders').then((response) => {
-      setListOfOrders(response.data);
+    void fetchData();
+  }, []);
+
+  const fetchData = async (): Promise<void> => {
+    await axios.get(url.orders).then(({ data }) => {
+      setListOfOrders(data);
     });
     setLoading(false);
-  }, []);
+  };
 
   return (
     <article className="ordersList">

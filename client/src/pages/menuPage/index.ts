@@ -1,1 +1,1 @@
-export { default as MenuPage } from './menuPage';
+export { default as MenuPage } from './MenuPage';

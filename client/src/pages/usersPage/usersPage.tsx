@@ -1,11 +1,10 @@
 import React from 'react';
-import AddUser from '../../components/userComponents/addUser/addUser';
-import Users from '../../components/userComponents/users/users';
+import { AddUser, UsersList } from '../../Components/UserComponents';
 
-const UsersPage = () => (
+const UsersPage = (): JSX.Element => (
   <>
     <AddUser />
-    <Users />
+    <UsersList />
   </>
 );
 

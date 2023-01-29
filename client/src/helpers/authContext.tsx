@@ -1,63 +1,69 @@
 import React, { createContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { url } from './Urls';
 
 interface Props {
   children: React.ReactNode;
 }
 
-export interface AuthUser {
+interface IUser {
   username: string;
   id: number;
   userType: string;
   userToken: string;
   status: boolean;
 }
-export type AuthContextType = {
-  authState: AuthUser;
-  setAuthState: (user: AuthUser) => void;
-};
 
-export const AuthContext = createContext<AuthContextType>({
+interface IAuthContext {
+  authState: IUser;
+  setAuthState: (user: IUser) => void;
+}
+
+export const AuthContext = createContext<IAuthContext>({
   authState: {
     username: '',
     id: 0,
     userType: '',
     userToken: '',
-    status: false,
+    status: false
   },
-  setAuthState: (user: AuthUser) => {},
+  setAuthState: (user: IUser) => {}
 });
 
-export const AuthContextProvider = ({ children }: Props) => {
-  const [authState, setAuthState] = useState<AuthUser>({
+export const AuthContextProvider = ({ children }: Props): JSX.Element => {
+  const [authState, setAuthState] = useState<IUser>({
     username: '',
     id: 0,
     userType: '',
     userToken: '',
-    status: false,
+    status: false
   });
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/users/auth', {
+    void fetchData();
+  }, []);
+
+  const fetchData = async (): Promise<void> => {
+    await axios
+      .get(url.auth, {
         headers: {
-          accessToken: localStorage.getItem('accessToken'),
-        },
+          accessToken: localStorage.getItem('accessToken')
+        }
       })
-      .then((response) => {
-        if (response.data.error) {
+      .then(({ data }) => {
+        if (data.error === true) {
           setAuthState({ ...authState, status: false });
         } else {
           setAuthState({
-            username: response.data.username,
-            id: response.data.id,
-            userType: response.data.userType,
-            userToken: response.data.userToken,
-            status: true,
+            username: data.username,
+            id: data.id,
+            userType: data.userType,
+            userToken: data.userToken,
+            status: true
           });
         }
       });
-  }, [authState]);
+  };
 
   return (
     <AuthContext.Provider value={{ authState, setAuthState }}>

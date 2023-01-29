@@ -1,45 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-
-interface MenuTypes {
-  id: number;
-  name: string;
-  price: string;
-}
+import { url } from '../../../Helpers/Urls';
+import { type IMenu } from '../MenuList/MenuList';
 
 const Menu = (): JSX.Element => {
-  let { menuId } = useParams();
-  const [menuData, setMenuData] = useState<MenuTypes>({
+  const { menuId } = useParams();
+  const [menuData, setMenuData] = useState<IMenu>({
     id: 1,
     name: '',
-    price: '',
+    price: 0
   });
 
-  useEffect(() => {
-    axios.get(`http://localhost:3001/menu/byId/${menuId}`).then((response) => {
-      setMenuData(response.data);
+  const fetchData = async (): Promise<void> => {
+    await axios.get(`${url.menu}/byId/${menuId as string}`).then(({ data }) => {
+      setMenuData(data);
     });
+  };
+
+  useEffect(() => {
+    void fetchData();
   }, [menuId]);
 
-  const editMenu = (option: string) => {
+  const editMenu = async (option: string): Promise<void> => {
     if (option === 'name') {
-      let newName = prompt('Wpisz nową nazwę dania');
-      axios.put(
-        'http://localhost:3001/menu/name',
+      const newName = prompt('Wpisz nową nazwę dania');
+      await axios.put(
+        `${url.menu}/name`,
         {
           newName,
-          id: menuId,
+          id: menuId
         },
         { headers: { accessToken: localStorage.getItem('accessToken') } }
       );
     } else if (option === 'price') {
-      let newPrice = prompt('Wpisz nową cenę');
-      axios.put(
-        'http://localhost:3001/menu/price',
+      const newPrice = prompt('Wpisz nową cenę');
+      await axios.put(
+        `${url.menu}/price`,
         {
           newPrice,
-          id: menuId,
+          id: menuId
         },
         { headers: { accessToken: localStorage.getItem('accessToken') } }
       );
@@ -51,14 +51,14 @@ const Menu = (): JSX.Element => {
     <article>
       <div
         onClick={() => {
-          editMenu('name');
+          void editMenu('name');
         }}
       >
         {menuData.name}
       </div>
       <div
         onClick={() => {
-          editMenu('price');
+          void editMenu('price');
         }}
       >
         {menuData.price}

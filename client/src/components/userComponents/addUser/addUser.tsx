@@ -1,34 +1,35 @@
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import './addUser.scss';
+import './AddUser.scss';
+import { url } from '../../../Helpers/Urls';
 
-interface UserTypes {
+interface IUser {
   username: string;
   userType: string;
   userToken: number | string;
   userPIN: number | string;
 }
 
-const AddUser = () => {
-  const initialValues: UserTypes = {
+const AddUser = (): JSX.Element => {
+  const initialValues: IUser = {
     username: '',
     userType: '',
     userToken: '',
-    userPIN: '',
+    userPIN: ''
   };
 
-  const onSubmit = (data: UserTypes) => {
-    axios
-      .post('http://localhost:3001/users', data, {
+  const onSubmit = async (data: IUser): Promise<void> => {
+    await axios
+      .post(url.users, data, {
         headers: {
-          accessToken: localStorage.getItem('accessToken'),
-        },
+          accessToken: localStorage.getItem('accessToken')
+        }
       })
-      .then((response) => {
-        if (response.data.error) {
-          alert(response.data.error);
+      .then(({ data }) => {
+        if (data.error === true) {
+          alert(data.error);
         } else {
           window.location.reload();
         }
@@ -47,7 +48,7 @@ const AddUser = () => {
       ),
     userPIN: Yup.string()
       .required('Kod PIN musi zawierać 4 znaki!')
-      .test('len', 'Kod PIN musi zawirać 4 znaki!', (val) => val?.length === 4),
+      .test('len', 'Kod PIN musi zawirać 4 znaki!', (val) => val?.length === 4)
   });
 
   return (

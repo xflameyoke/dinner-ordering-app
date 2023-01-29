@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import './auth.scss';
-import AuthContext from '../../helpers/authContext';
+import './Auth.scss';
+import AuthContext from '../../Helpers/AuthContext';
+import { url } from '../../Helpers/Urls';
 
-interface UserLogin {
+interface IUserData {
   userToken: number;
   userPIN: string;
 }
@@ -13,9 +14,9 @@ interface UserLogin {
 const Auth = (): JSX.Element => {
   const { setAuthState } = useContext(AuthContext);
 
-  const initialValues: UserLogin = {
+  const initialValues: IUserData = {
     userToken: 0,
-    userPIN: '',
+    userPIN: ''
   };
 
   const validationSchema = Yup.object().shape({
@@ -23,26 +24,26 @@ const Auth = (): JSX.Element => {
       .required('Numer użytkownika jest wymagany!')
       .test(
         'len',
-        'Numer użytkownika musi wynosić 9 cyfr!',
+        'Numer użytkownika musi wynosić 5 cyfr!',
         (val) => val?.toString().length === 9
       ),
     userPIN: Yup.string()
       .required('Kod PIN jest wymagany!')
-      .test('len', 'Kod PIN musi wynosić 4 cyfry!', (val) => val?.length === 4),
+      .test('len', 'Kod PIN musi wynosić 4 cyfry!', (val) => val?.length === 4)
   });
 
-  const onSubmit = (data: UserLogin) => {
-    axios.post('http://localhost:3001/users/login', data).then((response) => {
-      if (response.data.error) {
-        alert(response.data.error);
+  const onSubmit = async (data: IUserData): Promise<void> => {
+    await axios.post(url.login, data).then(({ data }) => {
+      if (data.error === true) {
+        alert(data.error);
       } else {
-        localStorage.setItem('accessToken', response.data.token);
+        localStorage.setItem('accessToken', data.token);
         setAuthState({
-          username: response.data.username,
-          id: response.data.id,
-          userType: response.data.userType,
-          userToken: response.data.userToken,
-          status: true,
+          username: data.username,
+          id: data.id,
+          userType: data.userType,
+          userToken: data.userToken,
+          status: true
         });
         window.location.reload();
       }
@@ -75,6 +76,7 @@ const Auth = (): JSX.Element => {
               name="userPIN"
               maxLength={4}
               className="auth-form__input"
+              type="password"
             />
             <button type="submit">Zaloguj</button>
           </Form>

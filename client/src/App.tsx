@@ -1,17 +1,15 @@
 import React from 'react';
 import './App.css';
-import { Auth, Nav } from './components';
+import { Auth, Nav } from './Components';
 import { Route, Routes } from 'react-router-dom';
-import User from './components/userComponents/user/user';
-import Order from './components/orderComponents/order/order';
-import AddOrder from './components/orderComponents/addOrder/addOrder';
-import Menu from './components/menuComponents/menu/menu';
-import { ShiftPage, MenuPage, UsersPage } from './pages';
-import { AuthContextProvider } from './helpers/authContext';
-import OrdersList from './components/orderComponents/ordersList/ordersList';
-import ChangePIN from './components/changePIN/ChangePIN';
+import { User } from './Components/UserComponents';
+import { AddOrder, Order, OrdersList } from './Components/OrderComponents';
+import { Menu } from './Components/MenuComponents';
+import { MenuPage, ShiftPage, UsersPage } from './pages';
+import { AuthContextProvider } from './Helpers/AuthContext';
+import { ChangePIN } from './Components/ChangePIN';
 
-const App = () => {
+const App = (): JSX.Element => {
   return (
     <AuthContextProvider>
       <Nav />

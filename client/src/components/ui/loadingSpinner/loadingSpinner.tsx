@@ -1,5 +1,5 @@
 import React from 'react';
-import './loadingSpinner.scss';
+import './LoadingSpinner.scss';
 
 const LoadingSpinner = (): JSX.Element => (
   <div className="lds-container">

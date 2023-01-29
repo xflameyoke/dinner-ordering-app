@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { AuthContext } from '../../helpers/authContext';
+import { AuthContext } from '../../Helpers/AuthContext';
 
-const Shift = () => {
+const Shift = (): JSX.Element => {
   const { authState } = useContext(AuthContext);
 
   return (

@@ -1,0 +1,62 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["plugin:react/recommended", "standard-with-typescript"],
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "parser": "@typescript-eslint/parser",
+    "project": "tsconfig.eslint.json",
+    "tsconfigRootDir": "./",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "eslint-plugin-prettier"],
+  "rules": {
+    "react/prop-types": "error",
+    "dot-notation": "off",
+    "semi": [2, "always"],
+    "@typescript-eslint/semi": "off",
+    "no-unexpected-multiline": "off",
+    "multiline-ternary": ["error", "never"],
+    "sort-imports": [
+      "error",
+      {
+        "ignoreDeclarationSort": true,
+        "allowSeparatedGroups": true
+      }
+    ],
+    "@typescript-eslint/member-delimiter-style": [
+      "warn",
+      {
+        "multiline": {
+          "delimiter": "semi",
+          "requireLast": true
+        },
+        "singleline": {
+          "delimiter": "semi",
+          "requireLast": false
+        }
+      }
+    ],
+    "no-console": 1,
+    "react/jsx-uses-react": 2,
+    "react/react-in-jsx-scope": 2,
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "trailingComma": "none",
+        "bracketSpacing": true,
+        "jsxBracketSameLine": false,
+        "parser": "babel-ts",
+        "semi": true,
+        "useTabs": false,
+        "tabWidth": 2,
+        "printWidth": 80,
+        "endOfLine": "auto"
+      }
+    ]
+  }
+}

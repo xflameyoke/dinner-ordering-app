@@ -1,3 +1,3 @@
-export * from './nav';
-export * from './shift';
-export * from './auth';
+export * from './Nav';
+export * from './Shift';
+export * from './Auth';

@@ -1,33 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './menuList.scss';
+import './MenuList.scss';
 import { useNavigate } from 'react-router-dom';
-import LoadingSpinner from '../../ui/loadingSpinner/loadingSpinner';
-interface MenuTypes {
+import { LoadingSpinner } from '../../UI/LoadingSpinner';
+import { url } from '../../../Helpers/Urls';
+
+export interface IMenu {
   name: string;
   price: number;
   id: number;
 }
 
 const MenuList = (): JSX.Element => {
-  const [menuList, setMenuList] = useState<MenuTypes[]>([]);
+  const [menuList, setMenuList] = useState<IMenu[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
-  useEffect(() => {
+  const fetchData = async (): Promise<void> => {
     setLoading(true);
-    axios.get('http://localhost:3001/menu').then((response) => {
-      setMenuList(response.data);
+    await axios.get(url.menu).then(({ data }) => {
+      setMenuList(data);
     });
     setLoading(false);
+  };
+
+  useEffect(() => {
+    void fetchData();
   }, []);
 
-  const deleteMenu = (id: number) => {
-    axios
-      .delete(`http://localhost:3001/menu/${id}`, {
+  const deleteMenu = async (id: number): Promise<void> => {
+    await axios
+      .delete(`${url.menu}/${id}`, {
         headers: {
-          accessToken: localStorage.getItem('accessToken'),
-        },
+          accessToken: localStorage.getItem('accessToken')
+        }
       })
       .then(() => {
         setMenuList(
@@ -62,7 +68,7 @@ const MenuList = (): JSX.Element => {
                 <div className="menuList__buttons">
                   <button
                     onClick={() => {
-                      deleteMenu(menu.id);
+                      void deleteMenu(menu.id);
                     }}
                     className="menuList__button"
                   >
