@@ -1,30 +1,31 @@
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import './addMenu.scss';
+import './AddMenu.scss';
+import { url } from '../../../Helpers/Urls';
 
-interface MenuTypes {
+interface IAddMenu {
   name: string;
   price: number;
 }
 
 const AddMenu = (): JSX.Element => {
-  const initialValues: MenuTypes = {
+  const initialValues: IAddMenu = {
     name: '',
-    price: 0,
+    price: 0
   };
 
-  const onSubmit = (data: MenuTypes) => {
-    axios
-      .post('http://localhost:3001/menu', data, {
+  const onSubmit = async (data: IAddMenu): Promise<void> => {
+    await axios
+      .post(url.menu, data, {
         headers: {
-          accessToken: sessionStorage.getItem('accessToken'),
-        },
+          accessToken: sessionStorage.getItem('accessToken')
+        }
       })
-      .then((response) => {
-        if (response.data.error) {
-          alert(response.data.error);
+      .then(({ data }) => {
+        if (data.error === true) {
+          alert(data.error);
         } else {
           window.location.reload();
         }
@@ -35,7 +36,7 @@ const AddMenu = (): JSX.Element => {
     name: Yup.string().required('Nazwa dania jest wymagana!'),
     price: Yup.number()
       .min(1, 'Minimalna cena wynosi 1 zł!')
-      .required('Cena jest wymagana!'),
+      .required('Cena jest wymagana!')
   });
 
   return (

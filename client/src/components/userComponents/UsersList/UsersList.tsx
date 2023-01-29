@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './users.scss';
-import LoadingSpinner from '../../ui/loadingSpinner/loadingSpinner';
+import './UsersList.scss';
+import { LoadingSpinner } from '../../UI/LoadingSpinner';
+import { url } from '../../../Helpers/Urls';
 
-interface UserTypes {
+interface IUser {
   id: number;
   username: string;
   userType: string;
@@ -12,25 +13,29 @@ interface UserTypes {
   userPIN: number;
 }
 
-const Users = (): JSX.Element => {
-  const [listOfUsers, setListOfUsers] = useState<UserTypes[]>([]);
+const UsersList = (): JSX.Element => {
+  const [listOfUsers, setListOfUsers] = useState<IUser[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
-    axios.get('http://localhost:3001/users').then((response) => {
-      setListOfUsers(response.data);
-    });
-    setLoading(false);
+    void fetchData();
   }, []);
 
-  const deleteUser = (id: number) => {
-    axios
-      .delete(`http://localhost:3001/users/${id}`, {
+  const fetchData = async (): Promise<void> => {
+    setLoading(true);
+    await axios.get(url.users).then(({ data }) => {
+      setListOfUsers(data);
+    });
+    setLoading(false);
+  };
+
+  const deleteUser = async (id: number): Promise<void> => {
+    await axios
+      .delete(`${url.users}/${id}`, {
         headers: {
-          accessToken: localStorage.getItem('accessToken'),
-        },
+          accessToken: localStorage.getItem('accessToken')
+        }
       })
       .then(() => {
         setListOfUsers(
@@ -72,7 +77,7 @@ const Users = (): JSX.Element => {
                 <div className="users__buttons">
                   <button
                     onClick={() => {
-                      deleteUser(user.id);
+                      void deleteUser(user.id);
                     }}
                     className="users__button"
                   >
@@ -96,4 +101,4 @@ const Users = (): JSX.Element => {
   );
 };
 
-export default Users;
+export default UsersList;

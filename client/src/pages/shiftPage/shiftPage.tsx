@@ -1,6 +1,6 @@
 import React from 'react';
-import { Shift } from '../../components';
+import { Shift } from '../../Components';
 
-const ShiftPage = () => <Shift />;
+const ShiftPage = (): JSX.Element => <Shift />;
 
 export default ShiftPage;

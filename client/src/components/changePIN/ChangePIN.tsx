@@ -1,7 +1,8 @@
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import axios from 'axios';
 import * as Yup from 'yup';
+import { url } from '../../Helpers/Urls';
 
 interface PINTypes {
   oldPIN: string;
@@ -11,7 +12,7 @@ interface PINTypes {
 const ChangePIN = (): JSX.Element => {
   const initialValues: PINTypes = {
     oldPIN: '',
-    newPIN: '',
+    newPIN: ''
   };
 
   const validationSchema = Yup.object().shape({
@@ -28,25 +29,25 @@ const ChangePIN = (): JSX.Element => {
         'len',
         'Nowy PIN musi zawierać 4 znaki!',
         (val) => val?.length === 4
-      ),
+      )
   });
 
-  const onSubmit = (data: PINTypes) => {
-    axios
+  const onSubmit = async (data: PINTypes): Promise<void> => {
+    await axios
       .put(
-        'http://localhost:3001/users/changePIN',
+        url.changePIN,
         {
           oldPIN: data.oldPIN,
-          newPIN: data.newPIN,
+          newPIN: data.newPIN
         },
         {
           headers: {
-            accessToken: localStorage.getItem('accessToken'),
-          },
+            accessToken: localStorage.getItem('accessToken')
+          }
         }
       )
       .then((response) => {
-        if (response.data.error) {
+        if (response.data.error === true) {
           alert(response.data.error);
         }
       });

@@ -1,58 +1,61 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import React, { useContext, useEffect, useState } from 'react';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import './addOrder.scss';
-import AuthContext from '../../../helpers/authContext';
+import './AddOrder.scss';
+import AuthContext from '../../../Helpers/AuthContext';
+import { url } from '../../../Helpers/Urls';
 
-interface MenuList {
+interface IMenu {
   name: string;
 }
-interface DishTypes {
+
+interface IDish {
   username: string;
   dish: string;
   ammount: number;
   shift: string;
 }
 
-interface ShiftTypes {
+interface IShift {
   name: string;
   hours: string;
 }
 
 const AddOrder = (): JSX.Element => {
   const { authState } = useContext(AuthContext);
-  const [menuList, setMenuList] = useState<MenuList[]>([]);
-  const [shiftList, setShiftList] = useState<ShiftTypes[]>([]);
-  const initialValues: DishTypes = {
+  const [menuList, setMenuList] = useState<IMenu[]>([]);
+  const [shiftList, setShiftList] = useState<IShift[]>([]);
+  const initialValues: IDish = {
     username: authState.username,
     dish: '',
     ammount: 1,
-    shift: '',
+    shift: ''
   };
 
   useEffect(() => {
-    axios.get('http://localhost:3001/menu').then((response) => {
-      setMenuList(response.data);
-    });
+    void fetchData();
   }, []);
 
-  useEffect(() => {
-    axios.get('http://localhost:3001/shift').then((response) => {
-      setShiftList(response.data);
+  const fetchData = async (): Promise<void> => {
+    await axios.get(url.menu).then(({ data }) => {
+      setMenuList(data);
     });
-  }, []);
+    await axios.get(url.shift).then(({ data }) => {
+      setShiftList(data);
+    });
+  };
 
-  const onSubmit = (data: DishTypes) => {
-    axios
-      .post('http://localhost:3001/orders', data, {
+  const onSubmit = async (data: IDish): Promise<void> => {
+    await axios
+      .post(url.orders, data, {
         headers: {
-          accessToken: localStorage.getItem('accessToken'),
-        },
+          accessToken: localStorage.getItem('accessToken')
+        }
       })
-      .then((response) => {
-        if (response.data.error) {
-          alert(response.data.error);
+      .then(({ data }) => {
+        if (data.error === true) {
+          alert(data.error);
         } else {
           alert('Zamówienie złożone poprawnie!');
         }
@@ -61,7 +64,7 @@ const AddOrder = (): JSX.Element => {
 
   const validationSchema = Yup.object().shape({
     dinner: Yup.string(),
-    shift: Yup.string(),
+    shift: Yup.string()
   });
 
   return (
@@ -92,7 +95,9 @@ const AddOrder = (): JSX.Element => {
               className="addOrder-form__input"
             >
               {menuList.map((menu) => (
-                <option value={`${menu.name}`}>{menu.name}</option>
+                <option value={`${menu.name}`} key={menu.name}>
+                  {menu.name}
+                </option>
               ))}
             </Field>
             <label>Ilość: </label>
@@ -115,7 +120,9 @@ const AddOrder = (): JSX.Element => {
               className="addOrder-form__input"
             >
               {shiftList.map((shift) => (
-                <option value={`${shift.name}`}>{shift.name}</option>
+                <option value={`${shift.name}`} key={shift.name}>
+                  {shift.name}
+                </option>
               ))}
             </Field>
             <button type="submit" className="addOrder-form__button">

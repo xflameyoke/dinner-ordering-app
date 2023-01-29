@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { url } from '../../../Helpers/Urls';
 
-interface OrderTypes {
+interface IOrder {
   id: number;
   username: string;
   dinner: string;
@@ -10,21 +11,25 @@ interface OrderTypes {
 }
 
 const Order = (): JSX.Element => {
-  let { orderId } = useParams();
-  const [orderData, setOrderData] = useState<OrderTypes>({
+  const { orderId } = useParams();
+  const [orderData, setOrderData] = useState<IOrder>({
     id: 1,
     username: '',
     dinner: '',
-    ammount: 1,
+    ammount: 1
   });
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3001/orders/byId/${orderId}`)
+    void fetchData();
+  }, []);
+
+  const fetchData = async (): Promise<void> => {
+    await axios
+      .get(`${url.orders}/byId/${orderId as string}`)
       .then((response) => {
         setOrderData(response.data);
       });
-  }, [orderId]);
+  };
 
   return (
     <article>

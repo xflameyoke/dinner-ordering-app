@@ -1,36 +1,41 @@
 import React, { useContext, useEffect } from 'react';
-import './nav.scss';
+import './Nav.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import AuthContext from '../../helpers/authContext';
+import AuthContext from '../../Helpers/AuthContext';
+import { url } from '../../Helpers/Urls';
 
-const Nav = () => {
+const Nav = (): JSX.Element => {
   const navigate = useNavigate();
   const { authState, setAuthState } = useContext(AuthContext);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/users/auth', {
+    void AuthResponse();
+  }, []);
+
+  const AuthResponse = async (): Promise<void> => {
+    await axios
+      .get(url.auth, {
         headers: {
-          accessToken: localStorage.getItem('accessToken'),
-        },
+          accessToken: localStorage.getItem('accessToken')
+        }
       })
-      .then((response) => {
-        if (response.data.error) {
+      .then(({ data }) => {
+        if (data.error === true) {
           setAuthState({ ...authState, status: false });
         } else {
           setAuthState({
-            username: response.data.username,
-            id: response.data.id,
-            userType: response.data.userType,
-            userToken: response.data.userToken,
-            status: true,
+            username: data.username,
+            id: data.id,
+            userType: data.userType,
+            userToken: data.userToken,
+            status: true
           });
         }
       });
-  }, [authState, setAuthState]);
+  };
 
-  const logout = () => {
+  const logout = (): void => {
     localStorage.removeItem('accessToken');
     navigate('/');
     setAuthState({
@@ -38,7 +43,7 @@ const Nav = () => {
       id: 0,
       userType: '',
       userToken: '',
-      status: false,
+      status: false
     });
     window.location.reload();
   };
@@ -46,7 +51,7 @@ const Nav = () => {
   return (
     <nav className="nav">
       <ul>
-        {authState.status === false ? (
+        {!authState.status ? (
           <li>
             <Link to="/">Logowanie</Link>
           </li>

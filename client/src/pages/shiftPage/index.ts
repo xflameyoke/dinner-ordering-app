@@ -1,1 +1,1 @@
-export { default as ShiftPage } from './shiftPage';
+export { default as ShiftPage } from './ShiftPage';

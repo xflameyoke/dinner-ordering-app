@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import AddDish from '../../components/menuComponents/addMenu/addMenu';
-import MenuList from '../../components/menuComponents/menuList/menuList';
-import AuthContext from '../../helpers/authContext';
+import { AddMenu, MenuList } from '../../Components/MenuComponents';
+import AuthContext from '../../Helpers/AuthContext';
 
 const MenuPage = (): JSX.Element => {
   const { authState } = useContext(AuthContext);
@@ -11,7 +10,7 @@ const MenuPage = (): JSX.Element => {
         <MenuList />
       ) : (
         <>
-          <AddDish />
+          <AddMenu />
           <MenuList />
         </>
       )}

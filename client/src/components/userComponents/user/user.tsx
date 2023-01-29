@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { url } from '../../../Helpers/Urls';
 
 interface UserTypes {
   id: number;
@@ -11,41 +12,47 @@ interface UserTypes {
 }
 
 const User = (): JSX.Element => {
-  let { userId } = useParams();
+  const { userId } = useParams();
   const [userData, setUserData] = useState<UserTypes>({
     id: 1,
     username: '',
     userType: '',
     userToken: '',
-    userPIN: '',
+    userPIN: ''
   });
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/users/byId/${userId}`).then((response) => {
-      setUserData(response.data);
-    });
-  }, [userId]);
+    void fetchData();
+  }, []);
 
-  const editUser = (option: string) => {
+  const fetchData = async (): Promise<void> => {
+    await axios
+      .get(`${url.users}/byId/${userId as string}`)
+      .then((response) => {
+        setUserData(response.data);
+      });
+  };
+
+  const editUser = async (option: string): Promise<void> => {
     if (option === 'username') {
-      let newUsername = prompt('Wpisz nową nazwę użytkownika: ');
-      axios.put(
-        'http://localhost:3001/users/username',
+      const newUsername = prompt('Wpisz nową nazwę użytkownika: ');
+      await axios.put(
+        `${url.users}/username`,
         {
-          newUsername: newUsername,
-          id: userId,
+          newUsername,
+          id: userId
         },
         {
-          headers: { accessToken: localStorage.getItem('accessToken') },
+          headers: { accessToken: localStorage.getItem('accessToken') }
         }
       );
     } else if (option === 'userToken') {
-      let newUserToken = prompt('Wpis nowy numer token: ');
-      axios.put(
-        'http://localhost:3001/users/userToken',
+      const newUserToken = prompt('Wpis nowy numer token: ');
+      await axios.put(
+        `${url.users}/userToken`,
         {
-          newUserToken: newUserToken,
-          id: userId,
+          newUserToken,
+          id: userId
         },
         { headers: { accessToken: localStorage.getItem('accessToken') } }
       );
@@ -59,7 +66,7 @@ const User = (): JSX.Element => {
         <li>ID: {userData.id}</li>
         <li
           onClick={() => {
-            editUser('username');
+            void editUser('username');
           }}
         >
           Nazwa: {userData.username}
@@ -67,7 +74,7 @@ const User = (): JSX.Element => {
         <li>Typ: {userData.userType}</li>
         <li
           onClick={() => {
-            editUser('userToken');
+            void editUser('userToken');
           }}
         >
           Token: {userData.userToken}

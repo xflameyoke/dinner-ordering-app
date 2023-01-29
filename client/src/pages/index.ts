@@ -1,3 +1,3 @@
-export * from './shiftPage';
-export * from './menuPage';
-export * from './usersPage';
+export * from './ShiftPage';
+export * from './MenuPage';
+export * from './UsersPage';
