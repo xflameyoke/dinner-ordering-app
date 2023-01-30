@@ -5,7 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import { User } from './Components/UserComponents';
 import { AddOrder, Order, OrdersList } from './Components/OrderComponents';
 import { Menu } from './Components/MenuComponents';
-import { MenuPage, ShiftPage, UsersPage } from './pages';
+import { MenuPage, ShiftPage, UsersPage } from './Pages';
 import { AuthContextProvider } from './Helpers/AuthContext';
 import { ChangePIN } from './Components/ChangePIN';
 
