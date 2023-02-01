@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './MenuList.scss';
-import { useNavigate } from 'react-router-dom';
 import { LoadingSpinner } from '../../UI/LoadingSpinner';
 import { url } from '../../../Helpers/Urls';
+import './ShiftList.scss';
+import { useNavigate } from 'react-router-dom';
 
-export interface IMenu {
-  name: string;
-  price: number;
+export interface IShift {
   id: number;
+  shiftName: string;
+  hours: string;
 }
 
-const MenuList = (): JSX.Element => {
-  const [menuList, setMenuList] = useState<IMenu[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+const ShiftList = (): JSX.Element => {
+  const [shiftList, setShiftList] = useState<IShift[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,22 +22,22 @@ const MenuList = (): JSX.Element => {
 
   const fetchData = async (): Promise<void> => {
     setLoading(true);
-    await axios.get(url.menu).then(({ data }) => {
-      setMenuList(data);
+    await axios.get(url.shift).then(({ data }) => {
+      setShiftList(data);
     });
     setLoading(false);
   };
 
-  const deleteMenu = async (id: number): Promise<void> => {
+  const deleteShift = async (id: number): Promise<void> => {
     await axios
-      .delete(`${url.menu}/${id}`, {
+      .delete(`${url.shift}/${id}`, {
         headers: {
           accessToken: localStorage.getItem('accessToken')
         }
       })
       .then(() => {
-        setMenuList(
-          menuList.filter((val) => {
+        setShiftList(
+          shiftList.filter((val) => {
             return val.id !== id;
           })
         );
@@ -45,42 +45,42 @@ const MenuList = (): JSX.Element => {
   };
 
   return (
-    <article className="menuList">
+    <article className="shiftList">
       {loading ? (
         <LoadingSpinner />
       ) : (
         <>
-          {menuList.map((menu) => {
+          {shiftList.map((shift) => {
             return (
-              <ul key={menu.id}>
-                <li className="menuList-list">
+              <ul key={shift.id}>
+                <li className="shiftList-list">
                   <div>
                     <div>
-                      <p className="menuList-list__title">Nazwa: </p>
-                      {menu.name}
+                      <p className="shiftList-list__title">Nazwa: </p>
+                      {shift.shiftName}
                     </div>
                     <div>
-                      <p className="menuList-list__title">Cena: </p>
-                      {menu.price} zł
+                      <p className="shiftList-list__title">Godziny: </p>
+                      {shift.hours}
                     </div>
                   </div>
                 </li>
-                <div className="menuList__buttons">
+                <div className="shiftList__buttons">
                   <button
+                    className="shiftList__button"
                     onClick={() => {
-                      void deleteMenu(menu.id);
+                      navigate(`/shift/${shift.id}`);
                     }}
-                    className="menuList__button"
                   >
-                    Usuń
+                    Edytuj
                   </button>
                   <button
                     onClick={() => {
-                      navigate(`/menu/${menu.id}`);
+                      void deleteShift(shift.id);
                     }}
-                    className="menuList__button menuList__button--edit"
+                    className="shiftList__button"
                   >
-                    Edytuj
+                    Usuń
                   </button>
                 </div>
               </ul>
@@ -92,4 +92,4 @@ const MenuList = (): JSX.Element => {
   );
 };
 
-export default MenuList;
+export default ShiftList;

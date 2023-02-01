@@ -1,4 +1,4 @@
-.menuList {
+.groupList {
   display: grid;
   grid-template-columns: 400px 400px 400px 400px;
   width: 1600px;
@@ -48,7 +48,7 @@
   }
 }
 
-.menuList-list {
+.groupList-list {
   display: flex;
   flex-direction: column;
 
@@ -63,7 +63,7 @@
   }
 }
 
-.menuList__button--edit {
+.groupList__button--edit {
   &:hover {
     color: green;
     border: 2px solid green;

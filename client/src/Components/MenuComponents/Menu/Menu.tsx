@@ -12,15 +12,15 @@ const Menu = (): JSX.Element => {
     price: 0
   });
 
+  useEffect(() => {
+    void fetchData();
+  }, []);
+
   const fetchData = async (): Promise<void> => {
     await axios.get(`${url.menu}/byId/${menuId as string}`).then(({ data }) => {
       setMenuData(data);
     });
   };
-
-  useEffect(() => {
-    void fetchData();
-  }, [menuId]);
 
   const editMenu = async (option: string): Promise<void> => {
     if (option === 'name') {

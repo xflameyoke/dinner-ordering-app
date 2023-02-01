@@ -5,5 +5,6 @@ export const url = {
   menu: 'http://localhost:3001/menu',
   auth: 'http://localhost:3001/users/auth',
   shift: 'http://localhost:3001/shift',
-  orders: 'http://localhost:3001/orders'
+  orders: 'http://localhost:3001/orders',
+  group: 'http://localhost:3001/group'
 };

@@ -21,3 +21,5 @@ const ordersRouter = require('./routes/orders');
 app.use('/orders', ordersRouter);
 const shiftRouter = require('./routes/shift');
 app.use('/shift', shiftRouter);
+const groupRouter = require('./routes/group');
+app.use('/group', groupRouter);
