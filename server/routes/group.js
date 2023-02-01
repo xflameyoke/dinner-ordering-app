@@ -23,6 +23,26 @@ router.get('/byId/:groupId', async (req, res) => {
     res.json(group);
 });
 
+router.put('/gId', validateToken, async (req, res) => {
+    const { newGroupId, id } = req.body;
+    await Group.update({ groupId: newGroupId }, {
+        where: {
+            id: id
+        }
+    });
+    res.json(newGroupId);
+});
+
+router.put('/gDesc', validateToken, async (req, res) => {
+    const { newGroupDesc, id } = req.body;
+    await Group.update({ groupDesc: newGroupDesc }, {
+        where: {
+            id: id
+        }
+    });
+    res.json(newGroupDesc);
+});
+
 router.delete('/:groupId', validateToken, async (req, res) => {
     const groupId = req.params.groupId;
     await Group.destroy({
