@@ -17,10 +17,11 @@ router.get('/byId/:userId', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { username, userType, userToken, userPIN } = req.body;
+    const { username, userGroup, userType, userToken, userPIN } = req.body;
     bcrypt.hash(userPIN, 4).then((hash) => {
         Users.create({
             username,
+            userGroup,
             userType,
             userToken,
             userPIN: hash,
@@ -40,8 +41,8 @@ router.post('/login', async (req, res) => {
         if (!match) res.json({ error: 'Błędny użytkownik lub PIN!' });
 
         const accessToken = sign(
-            { username: user.username, id: user.id, userType: user.userType, userToken: user.userToken }, 'logininformation');
-        res.json({ token: accessToken, username: user.username, id: user.id, userType: user.userType, userToken: user.userToken });
+            { username: user.username, id: user.id, userType: user.userType, userToken: user.userToken, userGroup: user.userGroup }, 'logininformation');
+        res.json({ token: accessToken, username: user.username, id: user.id, userGroup: user.userGroup, userType: user.userType, userToken: user.userToken });
     });
 });
 

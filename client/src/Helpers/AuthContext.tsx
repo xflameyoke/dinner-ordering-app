@@ -6,12 +6,14 @@ interface Props {
   children: React.ReactNode;
 }
 
-interface IUser {
-  username: string;
-  id: number;
-  userType: string;
-  userToken: string;
-  status: boolean;
+export interface IUser {
+  username?: string;
+  id?: number;
+  userGroup?: string;
+  userType?: string;
+  userToken?: string;
+  userPIN?: string;
+  status?: boolean;
 }
 
 interface IAuthContext {
@@ -23,8 +25,10 @@ export const AuthContext = createContext<IAuthContext>({
   authState: {
     username: '',
     id: 0,
+    userGroup: '',
     userType: '',
     userToken: '',
+    userPIN: '',
     status: false
   },
   setAuthState: (user: IUser) => {}
@@ -34,8 +38,10 @@ export const AuthContextProvider = ({ children }: Props): JSX.Element => {
   const [authState, setAuthState] = useState<IUser>({
     username: '',
     id: 0,
+    userGroup: '',
     userType: '',
     userToken: '',
+    userPIN: '',
     status: false
   });
 
@@ -57,8 +63,10 @@ export const AuthContextProvider = ({ children }: Props): JSX.Element => {
           setAuthState({
             username: data.username,
             id: data.id,
+            userGroup: data.userGroup,
             userType: data.userType,
             userToken: data.userToken,
+            userPIN: data.userPIN,
             status: true
           });
         }

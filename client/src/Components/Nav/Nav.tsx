@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-boolean-literal-compare */
 import React, { useContext, useEffect } from 'react';
 import './Nav.scss';
 import { Link, useNavigate } from 'react-router-dom';
@@ -27,8 +28,10 @@ const Nav = (): JSX.Element => {
           setAuthState({
             username: data.username,
             id: data.id,
+            userGroup: data.userGroup,
             userType: data.userType,
             userToken: data.userToken,
+            userPIN: data.userPIN,
             status: true
           });
         }
@@ -41,8 +44,10 @@ const Nav = (): JSX.Element => {
     setAuthState({
       username: '',
       id: 0,
+      userGroup: '',
       userType: '',
       userToken: '',
+      userPIN: '',
       status: false
     });
     window.location.reload();
@@ -51,7 +56,7 @@ const Nav = (): JSX.Element => {
   return (
     <nav className="nav">
       <ul>
-        {!authState.status ? (
+        {authState.status === false ? (
           <li>
             <Link to="/">Logowanie</Link>
           </li>

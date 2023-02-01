@@ -2,20 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { url } from '../../../Helpers/Urls';
-
-interface UserTypes {
-  id: number;
-  username: string;
-  userType: string;
-  userToken: number | string;
-  userPIN: number | string;
-}
+import { type IUser } from '../../../Helpers/AuthContext';
 
 const User = (): JSX.Element => {
   const { userId } = useParams();
-  const [userData, setUserData] = useState<UserTypes>({
+  const [userData, setUserData] = useState<IUser>({
     id: 1,
     username: '',
+    userGroup: '',
     userType: '',
     userToken: '',
     userPIN: ''
@@ -28,8 +22,8 @@ const User = (): JSX.Element => {
   const fetchData = async (): Promise<void> => {
     await axios
       .get(`${url.users}/byId/${userId as string}`)
-      .then((response) => {
-        setUserData(response.data);
+      .then(({ data }) => {
+        setUserData(data);
       });
   };
 

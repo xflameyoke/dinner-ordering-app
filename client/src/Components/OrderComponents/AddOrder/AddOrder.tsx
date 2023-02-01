@@ -5,13 +5,12 @@ import axios from 'axios';
 import './AddOrder.scss';
 import AuthContext from '../../../Helpers/AuthContext';
 import { url } from '../../../Helpers/Urls';
-
 interface IMenu {
   name: string;
 }
 
 interface IDish {
-  username: string;
+  username?: string;
   dish: string;
   ammount: number;
   shift: string;

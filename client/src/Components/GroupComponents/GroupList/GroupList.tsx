@@ -28,7 +28,7 @@ const MenuList = (): JSX.Element => {
     setLoading(false);
   };
 
-  const deleteMenu = async (id: number): Promise<void> => {
+  const deleteGroup = async (id: number): Promise<void> => {
     await axios
       .delete(`${url.group}/${id}`, {
         headers: {
@@ -68,7 +68,7 @@ const MenuList = (): JSX.Element => {
                 <div className="groupList__buttons">
                   <button
                     onClick={() => {
-                      void deleteMenu(group.id);
+                      void deleteGroup(group.id);
                     }}
                     className="groupList__button"
                   >

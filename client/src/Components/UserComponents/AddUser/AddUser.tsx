@@ -4,17 +4,10 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import './AddUser.scss';
 import { url } from '../../../Helpers/Urls';
-
-interface IUser {
-  username: string;
-  userType: string;
-  userGroup: number | string;
-  userToken: number | string;
-  userPIN: number | string;
-}
+import { type IUser } from '../../../Helpers/AuthContext';
 
 interface IGroup {
-  groupId: number;
+  groupId: string;
   groupDesc: string;
 }
 
@@ -25,7 +18,8 @@ const AddUser = (): JSX.Element => {
     userGroup: '',
     userType: '',
     userToken: '',
-    userPIN: ''
+    userPIN: '',
+    status: false
   };
 
   useEffect(() => {
@@ -59,11 +53,11 @@ const AddUser = (): JSX.Element => {
     userGroup: Yup.number().required('Wybór grupy jest wymagany!'),
     userType: Yup.string().required('Typ użytkownika jest wymagany!'),
     userToken: Yup.number()
-      .required('Numer token musi zawierać 9 cyfr!')
+      .required('Numer token musi zawierać 5 cyfr!')
       .test(
         'len',
-        'Token użytkownika musi wynosić 9 cyfr!',
-        (val) => val?.toString().length === 9
+        'Token użytkownika musi wynosić 5 cyfr!',
+        (val) => val?.toString().length === 5
       ),
     userPIN: Yup.string()
       .required('Kod PIN musi zawierać 4 znaki!')
@@ -124,7 +118,7 @@ const AddUser = (): JSX.Element => {
               name="userToken"
               placeholder="Numer token"
               className="addUser-form__input"
-              maxLength={9}
+              maxLength={5}
             />
             <label>Kod PIN: </label>
             <ErrorMessage name="userPIN" component="span" />
