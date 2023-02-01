@@ -23,4 +23,15 @@ router.get('/byId/:groupId', async (req, res) => {
     res.json(group);
 });
 
+router.delete('/:groupId', validateToken, async (req, res) => {
+    const groupId = req.params.groupId;
+    await Group.destroy({
+        where: {
+            id: groupId,
+        },
+    });
+
+    res.json("Grupa usunięta!");
+})
+
 module.exports = router;

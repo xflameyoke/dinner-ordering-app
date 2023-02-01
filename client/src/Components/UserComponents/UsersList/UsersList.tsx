@@ -4,17 +4,14 @@ import axios from 'axios';
 import './UsersList.scss';
 import { LoadingSpinner } from '../../UI/LoadingSpinner';
 import { url } from '../../../Helpers/Urls';
+import { type IUser } from '../../../Helpers/AuthContext';
 
-interface IUser {
+interface IUserList extends IUser {
   id: number;
-  username: string;
-  userType: string;
-  userToken: number;
-  userPIN: number;
 }
 
 const UsersList = (): JSX.Element => {
-  const [listOfUsers, setListOfUsers] = useState<IUser[]>([]);
+  const [listOfUsers, setListOfUsers] = useState<IUserList[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 

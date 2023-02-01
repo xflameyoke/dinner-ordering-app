@@ -5,17 +5,13 @@ import * as Yup from 'yup';
 import './Auth.scss';
 import AuthContext from '../../Helpers/AuthContext';
 import { url } from '../../Helpers/Urls';
-
-interface IUserData {
-  userToken: number;
-  userPIN: string;
-}
+import { type IUser } from '../../Helpers/AuthContext';
 
 const Auth = (): JSX.Element => {
   const { setAuthState } = useContext(AuthContext);
 
-  const initialValues: IUserData = {
-    userToken: 0,
+  const initialValues: IUser = {
+    userToken: '',
     userPIN: ''
   };
 
@@ -25,14 +21,14 @@ const Auth = (): JSX.Element => {
       .test(
         'len',
         'Numer użytkownika musi wynosić 5 cyfr!',
-        (val) => val?.toString().length === 9
+        (val) => val?.toString().length === 5
       ),
     userPIN: Yup.string()
       .required('Kod PIN jest wymagany!')
       .test('len', 'Kod PIN musi wynosić 4 cyfry!', (val) => val?.length === 4)
   });
 
-  const onSubmit = async (data: IUserData): Promise<void> => {
+  const onSubmit = async (data: IUser): Promise<void> => {
     await axios.post(url.login, data).then(({ data }) => {
       if (data.error === true) {
         alert(data.error);
@@ -41,8 +37,10 @@ const Auth = (): JSX.Element => {
         setAuthState({
           username: data.username,
           id: data.id,
+          userGroup: data.userGroup,
           userType: data.userType,
           userToken: data.userToken,
+          userPIN: data.userPIN,
           status: true
         });
         window.location.reload();
@@ -65,7 +63,7 @@ const Auth = (): JSX.Element => {
               autoComplete="off"
               id="userToken"
               name="userToken"
-              maxLength={9}
+              maxLength={5}
               className="auth-form__input"
             />
             <label>Kod PIN</label>
