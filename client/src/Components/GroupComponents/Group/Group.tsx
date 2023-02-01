@@ -30,11 +30,42 @@ const Order = (): JSX.Element => {
       });
   };
 
+  const editGroup = async (option: string): Promise<void> => {
+    if (option === 'gId') {
+      const newGroupId = prompt('Wpisz nową nazwę groupy');
+      await axios.put(
+        `${url.group}/gId`,
+        { newGroupId, id: groupId },
+        { headers: { accessToken: localStorage.getItem('accessToken') } }
+      );
+    } else if (option === 'gDesc') {
+      const newGroupDesc = prompt('Wpisz nowy opis grupy');
+      await axios.put(
+        `${url.group}/gDesc`,
+        { newGroupDesc, id: groupId },
+        { headers: { accessToken: localStorage.getItem('accessToken') } }
+      );
+    }
+    window.location.reload();
+  };
+
   return (
     <article>
       <ul>
-        <li>ID: {groupData.groupId}</li>
-        <li>Opis grupy: {groupData.groupDesc}</li>
+        <li
+          onClick={() => {
+            void editGroup('gId');
+          }}
+        >
+          ID: {groupData.groupId}
+        </li>
+        <li
+          onClick={() => {
+            void editGroup('gDesc');
+          }}
+        >
+          Opis grupy: {groupData.groupDesc}
+        </li>
       </ul>
     </article>
   );
