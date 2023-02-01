@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        userGroup: {
+            type: DataTypes.STRING,
+            allowNULL: false,
+        },
         userType: {
             type: DataTypes.STRING,
             allowNull: false,

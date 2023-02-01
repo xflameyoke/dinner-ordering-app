@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -8,16 +8,34 @@ import { url } from '../../../Helpers/Urls';
 interface IUser {
   username: string;
   userType: string;
+  userGroup: number | string;
   userToken: number | string;
   userPIN: number | string;
 }
 
+interface IGroup {
+  groupId: number;
+  groupDesc: string;
+}
+
 const AddUser = (): JSX.Element => {
+  const [groupList, setGroupList] = useState<IGroup[]>([]);
   const initialValues: IUser = {
     username: '',
+    userGroup: '',
     userType: '',
     userToken: '',
     userPIN: ''
+  };
+
+  useEffect(() => {
+    void fetchData();
+  }, []);
+
+  const fetchData = async (): Promise<void> => {
+    await axios.get(url.group).then(({ data }) => {
+      setGroupList(data);
+    });
   };
 
   const onSubmit = async (data: IUser): Promise<void> => {
@@ -38,6 +56,7 @@ const AddUser = (): JSX.Element => {
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('Imię i nazwisko jest wymagane!'),
+    userGroup: Yup.number().required('Wybór grupy jest wymagany!'),
     userType: Yup.string().required('Typ użytkownika jest wymagany!'),
     userToken: Yup.number()
       .required('Numer token musi zawierać 9 cyfr!')
@@ -69,6 +88,20 @@ const AddUser = (): JSX.Element => {
               placeholder="Jan Kowalski"
               className="addUser-form__input"
             />
+            <label>Grupa Użytkownika: </label>
+            <ErrorMessage name="userGroup" component="span" />
+            <Field
+              as="select"
+              id="userGroup"
+              name="userGroup"
+              className="addUser-form__input"
+            >
+              {groupList.map((group) => (
+                <option value={`${group.groupId}`} key={group.groupId}>
+                  {group.groupId}, {group.groupDesc}
+                </option>
+              ))}
+            </Field>
             <label>Typ Użytkownika: </label>
             <ErrorMessage name="userType" component="span" />
             <Field

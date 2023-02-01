@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './MenuList.scss';
+import './GroupList.scss';
 import { useNavigate } from 'react-router-dom';
 import { LoadingSpinner } from '../../UI/LoadingSpinner';
 import { url } from '../../../Helpers/Urls';
 
-export interface IMenu {
-  name: string;
-  price: number;
+export interface IGroup {
+  groupId: number;
+  groupDesc: string;
   id: number;
 }
 
 const MenuList = (): JSX.Element => {
-  const [menuList, setMenuList] = useState<IMenu[]>([]);
+  const [groupList, setGroupList] = useState<IGroup[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
@@ -22,22 +22,22 @@ const MenuList = (): JSX.Element => {
 
   const fetchData = async (): Promise<void> => {
     setLoading(true);
-    await axios.get(url.menu).then(({ data }) => {
-      setMenuList(data);
+    await axios.get(url.group).then(({ data }) => {
+      setGroupList(data);
     });
     setLoading(false);
   };
 
   const deleteMenu = async (id: number): Promise<void> => {
     await axios
-      .delete(`${url.menu}/${id}`, {
+      .delete(`${url.group}/${id}`, {
         headers: {
           accessToken: localStorage.getItem('accessToken')
         }
       })
       .then(() => {
-        setMenuList(
-          menuList.filter((val) => {
+        setGroupList(
+          groupList.filter((val) => {
             return val.id !== id;
           })
         );
@@ -45,40 +45,40 @@ const MenuList = (): JSX.Element => {
   };
 
   return (
-    <article className="menuList">
+    <article className="groupList">
       {loading ? (
         <LoadingSpinner />
       ) : (
         <>
-          {menuList.map((menu) => {
+          {groupList.map((group) => {
             return (
-              <ul key={menu.id}>
-                <li className="menuList-list">
+              <ul key={group.id}>
+                <li className="groupList-list">
                   <div>
                     <div>
-                      <p className="menuList-list__title">Nazwa: </p>
-                      {menu.name}
+                      <p className="groupList-list__title">ID Grupy: </p>
+                      {group.groupId}
                     </div>
                     <div>
-                      <p className="menuList-list__title">Cena: </p>
-                      {menu.price} zł
+                      <p className="groupList-list__title">Opis grupy: </p>
+                      {group.groupDesc}
                     </div>
                   </div>
                 </li>
-                <div className="menuList__buttons">
+                <div className="groupList__buttons">
                   <button
                     onClick={() => {
-                      void deleteMenu(menu.id);
+                      void deleteMenu(group.id);
                     }}
-                    className="menuList__button"
+                    className="groupList__button"
                   >
                     Usuń
                   </button>
                   <button
                     onClick={() => {
-                      navigate(`/menu/${menu.id}`);
+                      navigate(`/group/${group.id}`);
                     }}
-                    className="menuList__button menuList__button--edit"
+                    className="groupList__button groupList__button--edit"
                   >
                     Edytuj
                   </button>

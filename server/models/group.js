@@ -1,14 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
-    const Shift = sequelize.define("Shift", {
-        shiftName: {
+    const Group = sequelize.define("Group", {
+        groupId: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        hours: {
+        groupDesc: {
             type: DataTypes.STRING,
             allowNull: false,
         }
     })
 
-    return Shift;
+    return Group;
 }

@@ -5,9 +5,11 @@ import { Route, Routes } from 'react-router-dom';
 import { User } from './Components/UserComponents';
 import { AddOrder, Order, OrdersList } from './Components/OrderComponents';
 import { Menu } from './Components/MenuComponents';
-import { MenuPage, ShiftPage, UsersPage } from './Pages';
+import { GroupPage, MenuPage, ShiftPage, UsersPage } from './Pages';
 import { AuthContextProvider } from './Helpers/AuthContext';
 import { ChangePIN } from './Components/ChangePIN';
+import { Shift } from './Components/ShiftComponents';
+import { Group } from './Components/GroupComponents/Group';
 
 const App = (): JSX.Element => {
   return (
@@ -22,8 +24,11 @@ const App = (): JSX.Element => {
         <Route path="/orders" element={<OrdersList />} />
         <Route path="/addOrder" element={<AddOrder />} />
         <Route path="/order/:orderId" element={<Order />} />
-        <Route path="/admin" element={<ShiftPage />} />
+        <Route path="/shifts" element={<ShiftPage />} />
+        <Route path="shift/:shiftId" element={<Shift />} />
         <Route path="/changePIN" element={<ChangePIN />} />
+        <Route path="/groupPage" element={<GroupPage />} />
+        <Route path="/group/:groupId" element={<Group />} />
       </Routes>
     </AuthContextProvider>
   );

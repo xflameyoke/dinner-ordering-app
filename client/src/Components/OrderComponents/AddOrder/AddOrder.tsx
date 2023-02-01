@@ -18,7 +18,7 @@ interface IDish {
 }
 
 interface IShift {
-  name: string;
+  shiftName: string;
   hours: string;
 }
 
@@ -108,7 +108,6 @@ const AddOrder = (): JSX.Element => {
               name="ammount"
               value={1}
               className="addOrder-form__input"
-              type="number"
               disabled={true}
             />
             <label>Zmiana: </label>
@@ -120,8 +119,8 @@ const AddOrder = (): JSX.Element => {
               className="addOrder-form__input"
             >
               {shiftList.map((shift) => (
-                <option value={`${shift.name}`} key={shift.name}>
-                  {shift.name}
+                <option value={`${shift.shiftName}`} key={shift.shiftName}>
+                  {shift.shiftName}, {shift.hours}
                 </option>
               ))}
             </Field>

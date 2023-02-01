@@ -60,9 +60,6 @@ const Nav = (): JSX.Element => {
             {authState.userType === 'user' ? (
               <>
                 <li>
-                  <Link to="/menu">Menu</Link>
-                </li>
-                <li>
                   <Link to="/addOrder">Złóż zamówienie</Link>
                 </li>
                 <li>
@@ -71,6 +68,12 @@ const Nav = (): JSX.Element => {
               </>
             ) : (
               <>
+                <li>
+                  <Link to="/menu">Menu</Link>
+                </li>
+                <li>
+                  <Link to="/groupPage">Grupy użytkowników</Link>
+                </li>
                 <li>
                   <Link to="/shifts">Edytuj zmiany</Link>
                 </li>

@@ -20,7 +20,7 @@ const AddMenu = (): JSX.Element => {
     await axios
       .post(url.menu, data, {
         headers: {
-          accessToken: sessionStorage.getItem('accessToken')
+          accessToken: localStorage.getItem('accessToken')
         }
       })
       .then(({ data }) => {
@@ -40,8 +40,8 @@ const AddMenu = (): JSX.Element => {
   });
 
   return (
-    <article className="addDish">
-      <div className="addDish-form">
+    <article className="addMenu">
+      <div className="addMenu-form">
         <Formik
           initialValues={initialValues}
           onSubmit={onSubmit}
@@ -55,7 +55,7 @@ const AddMenu = (): JSX.Element => {
               id="name"
               name="name"
               placeholder="Rosół"
-              className="addDish-form__input"
+              className="addMenu-form__input"
             />
             <label>Cena: </label>
             <ErrorMessage name="price" component="span" />
@@ -66,9 +66,9 @@ const AddMenu = (): JSX.Element => {
               type="number"
               step="0.5"
               min={1}
-              className="addDish-form__input"
+              className="addMenu-form__input"
             />
-            <button type="submit" className="addDish-form__button">
+            <button type="submit" className="addMenu-form__button">
               Dodaj danie
             </button>
           </Form>
