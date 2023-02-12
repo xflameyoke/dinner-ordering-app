@@ -3,9 +3,9 @@ import './App.css';
 import { Auth, Nav } from './Components';
 import { Route, Routes } from 'react-router-dom';
 import { User } from './Components/UserComponents';
-import { AddOrder, Order, OrdersList } from './Components/OrderComponents';
+import { Order, OrdersList } from './Components/OrderComponents';
 import { Menu } from './Components/MenuComponents';
-import { GroupPage, MenuPage, ShiftPage, UsersPage } from './Pages';
+import { GroupPage, MenuPage, OrderPage, ShiftPage, UsersPage } from './Pages';
 import { AuthContextProvider } from './Helpers/AuthContext';
 import { ChangePIN } from './Components/ChangePIN';
 import { Shift } from './Components/ShiftComponents';
@@ -22,7 +22,7 @@ const App = (): JSX.Element => {
         <Route path="/menu" element={<MenuPage />} />
         <Route path="/menu/:menuId" element={<Menu />} />
         <Route path="/orders" element={<OrdersList />} />
-        <Route path="/addOrder" element={<AddOrder />} />
+        <Route path="/addOrder" element={<OrderPage />} />
         <Route path="/order/:orderId" element={<Order />} />
         <Route path="/shifts" element={<ShiftPage />} />
         <Route path="shift/:shiftId" element={<Shift />} />

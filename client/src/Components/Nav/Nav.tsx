@@ -56,7 +56,7 @@ const Nav = (): JSX.Element => {
   return (
     <nav className="nav">
       <ul>
-        {authState.status === false ? (
+        {authState.userType === undefined ? (
           <li>
             <Link to="/">Logowanie</Link>
           </li>
@@ -92,7 +92,6 @@ const Nav = (): JSX.Element => {
             )}
           </>
         )}
-
         <li className="nav__logout">
           {authState.username}
           <button className="nav__button" onClick={logout}>

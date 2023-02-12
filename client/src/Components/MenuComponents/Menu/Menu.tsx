@@ -9,7 +9,7 @@ const Menu = (): JSX.Element => {
   const [menuData, setMenuData] = useState<IMenu>({
     id: 1,
     name: '',
-    price: 0
+    desc: ''
   });
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Menu = (): JSX.Element => {
 
   const editMenu = async (option: string): Promise<void> => {
     if (option === 'name') {
-      const newName = prompt('Wpisz nową nazwę dania');
+      const newName = prompt('Wpisz nową nazwę zestawu: ');
       await axios.put(
         `${url.menu}/name`,
         {
@@ -33,12 +33,12 @@ const Menu = (): JSX.Element => {
         },
         { headers: { accessToken: localStorage.getItem('accessToken') } }
       );
-    } else if (option === 'price') {
-      const newPrice = prompt('Wpisz nową cenę');
+    } else if (option === 'desc') {
+      const newDesc = prompt('Wpisz nowy opis zestawu:');
       await axios.put(
-        `${url.menu}/price`,
+        `${url.menu}/desc`,
         {
-          newPrice,
+          newDesc,
           id: menuId
         },
         { headers: { accessToken: localStorage.getItem('accessToken') } }
@@ -58,10 +58,10 @@ const Menu = (): JSX.Element => {
       </div>
       <div
         onClick={() => {
-          void editMenu('price');
+          void editMenu('desc');
         }}
       >
-        {menuData.price}
+        {menuData.desc}
       </div>
     </article>
   );

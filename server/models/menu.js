@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        price: {
+        desc: {
             type: DataTypes.STRING,
             allowNull: false,
         }

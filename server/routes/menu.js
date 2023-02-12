@@ -9,10 +9,10 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    const { name, price } = req.body;
+    const { name, desc } = req.body;
     await Menu.create({
         name: name,
-        price: price,
+        desc: desc,
     });
     res.json('SUCCESS');
 });
@@ -33,14 +33,14 @@ router.put('/name', validateToken, async (req, res) => {
     res.json(newName);
 })
 
-router.put('/price', validateToken, async (req, res) => {
-    const { newPrice, id } = req.body;
-    await Menu.update({ price: newPrice }, {
+router.put('/desc', validateToken, async (req, res) => {
+    const { newDesc, id } = req.body;
+    await Menu.update({ desc: newDesc }, {
         where: {
             id: id
         }
     });
-    res.json(newPrice);
+    res.json(newDesc);
 })
 
 

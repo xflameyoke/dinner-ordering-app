@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import './MenuList.scss';
 import { useNavigate } from 'react-router-dom';
 import { LoadingSpinner } from '../../UI/LoadingSpinner';
 import { url } from '../../../Helpers/Urls';
+import AuthContext from '../../../Helpers/AuthContext';
 
 export interface IMenu {
   name: string;
-  price: number;
+  desc: string;
   id: number;
 }
 
 const MenuList = (): JSX.Element => {
+  const { authState } = useContext(AuthContext);
   const [menuList, setMenuList] = useState<IMenu[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
@@ -56,33 +58,37 @@ const MenuList = (): JSX.Element => {
                 <li className="menuList-list">
                   <div>
                     <div>
-                      <p className="menuList-list__title">Nazwa: </p>
+                      <p className="menuList-list__title">Nazwa zestawu: </p>
                       {menu.name}
                     </div>
                     <div>
-                      <p className="menuList-list__title">Cena: </p>
-                      {menu.price} zł
+                      <p className="menuList-list__title">Opis zestawu: </p>
+                      {menu.desc}
                     </div>
                   </div>
                 </li>
-                <div className="menuList__buttons">
-                  <button
-                    onClick={() => {
-                      void deleteMenu(menu.id);
-                    }}
-                    className="menuList__button"
-                  >
-                    Usuń
-                  </button>
-                  <button
-                    onClick={() => {
-                      navigate(`/menu/${menu.id}`);
-                    }}
-                    className="menuList__button menuList__button--edit"
-                  >
-                    Edytuj
-                  </button>
-                </div>
+                {authState.userType === 'user' ? (
+                  ''
+                ) : (
+                  <div className="menuList__buttons">
+                    <button
+                      onClick={() => {
+                        void deleteMenu(menu.id);
+                      }}
+                      className="menuList__button"
+                    >
+                      Usuń
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate(`/menu/${menu.id}`);
+                      }}
+                      className="menuList__button menuList__button--edit"
+                    >
+                      Edytuj
+                    </button>
+                  </div>
+                )}
               </ul>
             );
           })}
