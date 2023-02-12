@@ -7,13 +7,13 @@ import { url } from '../../../Helpers/Urls';
 
 interface IAddMenu {
   name: string;
-  price: number;
+  desc: string;
 }
 
 const AddMenu = (): JSX.Element => {
   const initialValues: IAddMenu = {
     name: '',
-    price: 0
+    desc: ''
   };
 
   const onSubmit = async (data: IAddMenu): Promise<void> => {
@@ -33,10 +33,8 @@ const AddMenu = (): JSX.Element => {
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Nazwa dania jest wymagana!'),
-    price: Yup.number()
-      .min(1, 'Minimalna cena wynosi 1 zł!')
-      .required('Cena jest wymagana!')
+    name: Yup.string().required('Nazwa zestawu jest wymagana!'),
+    desc: Yup.string().required('Opis zestawu jest wymagany!')
   });
 
   return (
@@ -48,28 +46,26 @@ const AddMenu = (): JSX.Element => {
           validationSchema={validationSchema}
         >
           <Form>
-            <label>Nazwa dania: </label>
+            <label>Nazwa zestawu: </label>
             <ErrorMessage name="name" component="span" />
             <Field
               autoComplete="off"
               id="name"
               name="name"
-              placeholder="Rosół"
+              placeholder="Zestaw 1"
               className="addMenu-form__input"
             />
-            <label>Cena: </label>
-            <ErrorMessage name="price" component="span" />
+            <label>Opis zestawu: </label>
+            <ErrorMessage name="desc" component="span" />
             <Field
               autoComplete="off"
-              id="price"
-              name="price"
-              type="number"
-              step="0.5"
-              min={1}
-              className="addMenu-form__input"
+              id="desc"
+              name="desc"
+              component="textarea"
+              className="addMenu-form__input addMenu-form__input--desc"
             />
             <button type="submit" className="addMenu-form__button">
-              Dodaj danie
+              Dodaj zestaw!
             </button>
           </Form>
         </Formik>

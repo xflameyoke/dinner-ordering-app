@@ -56,11 +56,11 @@ const ShiftList = (): JSX.Element => {
                 <li className="shiftList-list">
                   <div>
                     <div>
-                      <p className="shiftList-list__title">Nazwa: </p>
+                      <p className="shiftList-list__title">Nazwa zmiany: </p>
                       {shift.shiftName}
                     </div>
                     <div>
-                      <p className="shiftList-list__title">Godziny: </p>
+                      <p className="shiftList-list__title">Godziny zmiany: </p>
                       {shift.hours}
                     </div>
                   </div>

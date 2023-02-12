@@ -1,13 +1,15 @@
 .menuList {
   display: grid;
-  grid-template-columns: 400px 400px 400px 400px;
-  width: 1600px;
-  height: 100%;
-  margin: 0 auto 0 auto;
+  grid-template-columns: repeat(2, 400px);
+  grid-template-rows: repeat(8, 120px);
+  row-gap: 10px;
+  width: 800px;
+  height: 800px;
+  margin: 5rem auto 0 auto;
 
   ul {
     width: 380px;
-    height: 100px;
+    min-height: 120px;
     border: 1px solid gray;
     border-radius: 5px;
     padding: 0 5px 0 5px;
@@ -24,6 +26,7 @@
 
   li {
     list-style-type: none;
+    margin: 5px;
   }
 
   &__button {

@@ -62,6 +62,10 @@ const UsersList = (): JSX.Element => {
                       {user.username}
                     </div>
                     <div>
+                      <p className="users-list__title">Grupa użytkownika: </p>
+                      {user.userGroup}
+                    </div>
+                    <div>
                       <p className="users-list__title">Typ użytkownika: </p>
                       {user.userType}
                     </div>

@@ -1,13 +1,13 @@
 .users {
   display: grid;
-  grid-template-columns: 400px 400px 400px 400px;
   width: 1600px;
+  grid-template-columns: 400px 400px 400px 400px;
   height: 100%;
   margin: 0 auto 0 auto;
 
   ul {
     width: 380px;
-    height: 100px;
+    height: fit-content;
     border: 1px solid gray;
     border-radius: 5px;
     padding: 0 5px 0 5px;
